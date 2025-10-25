@@ -21,15 +21,8 @@ pipeline {
             }
         }
 
-        stage('Ensure Global TypeScript') {
-            steps {
-               sh 'npm install -g typescript || true'
-            }
-        }
-
         stage('Build') {
             steps {
-                sh 'npm ci'
                 sh 'npx next build'
             }
         }
@@ -38,7 +31,7 @@ pipeline {
             steps {
                 sh '''
                 sudo mkdir -p $DEPLOY_DIR
-                sudo rsync -av --delete ./ $DEPLOY_DIR/
+                sudo rsync -av --delete .next public package.json next.config.* $DEPLOY_DIR/
 
                 cd $DEPLOY_DIR
 
