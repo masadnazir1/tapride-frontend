@@ -20,6 +20,12 @@ pipeline {
                 sh 'npm ci'
             }
         }
+    
+        stage('Ensure TypeScript Installed') {
+        steps {
+                 sh 'npm install typescript --save-dev'
+             }
+       }
 
         stage('Build') {
             steps {
