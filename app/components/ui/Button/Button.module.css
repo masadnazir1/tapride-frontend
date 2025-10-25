@@ -1,0 +1,114 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    padding: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    font-size: 0.95rem;
+}
+
+/* Base tones */
+.tone-primary {
+    --btn-bg: var(--primary);
+    --btn-hover: var(--primary-dark);
+    --btn-color: #fff;
+}
+
+.tone-success {
+    --btn-bg: var(--success);
+    --btn-hover: #059669;
+    --btn-color: #fff;
+}
+
+.tone-danger {
+    --btn-bg: var(--danger);
+    --btn-hover: #dc2626;
+    --btn-color: #fff;
+}
+
+.tone-warning {
+    --btn-bg: var(--warning);
+    --btn-hover: #eab308;
+    --btn-color: #111827;
+}
+
+/* Variants */
+.variant-solid {
+    background: var(--btn-bg);
+    color: var(--btn-color);
+}
+
+.variant-solid:hover {
+    background: var(--btn-hover);
+}
+
+.variant-outline {
+    background: transparent;
+    border-color: var(--btn-bg);
+    color: var(--btn-bg);
+}
+
+.variant-outline:hover {
+    background: var(--btn-bg);
+    color: var(--btn-color);
+}
+
+.variant-ghost {
+    background: transparent;
+    color: var(--btn-bg);
+    box-shadow: none;
+}
+
+.variant-ghost:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.variant-link {
+    background: none;
+    color: var(--btn-bg);
+    border: none;
+    padding: 0;
+    box-shadow: none;
+}
+
+.variant-link:hover {
+    text-decoration: underline;
+}
+
+/* Loading state */
+.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* Icons */
+.icon {
+    font-size: 1.1em;
+    display: inline-flex;
+}
+
+.iconLeft {
+    margin-right: 0.25rem;
+}
+
+.iconRight {
+    margin-left: 0.25rem;
+}
+
+/* Spinner animation */
+.spinner {
+    animation: spin 1s linear infinite;
+    font-size: 1.2em;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

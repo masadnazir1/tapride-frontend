@@ -1,0 +1,166 @@
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    max-height: 600px;
+    overflow: hidden;
+    color: var(--text-on-primary, #fff);
+}
+
+
+/* Background Carousel */
+.carousel {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    will-change: opacity;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+    z-index: 1;
+}
+
+/* Layout */
+.container {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 2rem;
+}
+
+
+@media (min-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr 1fr;
+        padding: 0 5rem;
+    }
+}
+
+/* Left text area */
+.left {
+    max-width: 520px;
+}
+
+.left h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.left p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Right form */
+.right {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    background: #fff;
+    border-radius: var(--radius, 10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.field label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary, #333);
+}
+
+.select {
+    width: 100%;
+    padding: var(--input-padding, 0.75rem);
+    border: 1px solid var(--borderColor, #ccc);
+    border-radius: var(--radius, 8px);
+    background: #fff;
+    font-size: 0.95rem;
+}
+
+.select:focus {
+    border-color: var(--primary, #009688);
+    outline: none;
+}
+
+@media (max-width: 640px) {
+    .hero {
+        max-height: max-content;
+
+        overflow: hidden;
+        color: var(--text-on-primary, #fff);
+    }
+
+    .card {
+
+        max-width: 100%;
+    }
+
+    .container {
+        gap: 0;
+
+    }
+
+}
+
+@media (max-width: 940px) {
+    .hero {
+        max-height: max-content;
+
+    }
+
+    .card {
+
+        max-width: 100%;
+    }
+
+
+
+}
