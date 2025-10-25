@@ -20,12 +20,12 @@ pipeline {
                 sh 'npm ci'
             }
         }
-    
-        stage('Ensure TypeScript Installed') {
-        steps {
-                 sh 'npm install typescript --save-dev'
-             }
-       }
+
+        stage('Ensure Global TypeScript') {
+            steps {
+                sh 'sudo npm install -g typescript'
+            }
+        }
 
         stage('Build') {
             steps {
@@ -35,7 +35,6 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Safe deploy: copy build to /var/www with proper permissions
                 sh '''
                 sudo mkdir -p $DEPLOY_DIR
                 sudo rsync -av --delete ./ $DEPLOY_DIR/
