@@ -3,8 +3,9 @@ pipeline {
 
     environment {
         NODE_ENV = 'production'
-        APP_DIR = '/var/www/client/tapride-frontend'
+        DEPLOY_DIR = '/var/www/client/tapride-frontend'
         PORT = '8070'
+        SCREEN_NAME = 'tapride'
     }
 
     stages {
@@ -16,41 +17,44 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                dir("${APP_DIR}") {
-                    sh 'npm ci'
-                }
+                sh 'npm ci'
             }
         }
 
         stage('Build') {
             steps {
-                dir("${APP_DIR}") {
-                    sh 'npm run build'
-                }
+                sh 'npm run build'
             }
         }
 
         stage('Deploy') {
             steps {
-                dir("${APP_DIR}") {
-                    // Kill existing screen session if running
-                    sh '''
-                    SCREEN_NAME=tapride
-                    if screen -list | grep -q "$SCREEN_NAME"; then
-                        screen -S $SCREEN_NAME -X quit
-                    fi
+                // Safe deploy: copy build to /var/www with proper permissions
+                sh '''
+                sudo mkdir -p $DEPLOY_DIR
+                sudo rsync -av --delete ./ $DEPLOY_DIR/
 
-                    # Start new detached screen running Next.js on port 8070
-                    screen -dmS $SCREEN_NAME bash -c "PORT=$PORT npm run start"
-                    '''
-                }
+                cd $DEPLOY_DIR
+
+                if screen -list | grep -q "$SCREEN_NAME"; then
+                    screen -S $SCREEN_NAME -X quit
+                fi
+
+                sudo chown -R www-data:www-data $DEPLOY_DIR
+                sudo chmod -R 755 $DEPLOY_DIR
+
+                screen -dmS $SCREEN_NAME bash -c "PORT=$PORT npm run start"
+                '''
             }
         }
     }
 
     post {
-        success { echo 'Deployment successful.' }
-        failure { echo 'Deployment failed.' }
+        success {
+            echo 'Deployment successful.'
+        }
+        failure {
+            echo 'Deployment failed.'
+        }
     }
 }
-
