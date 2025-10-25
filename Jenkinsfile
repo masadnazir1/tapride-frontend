@@ -23,7 +23,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'npx next build'
+                sh 'npm run build'
             }
         }
 
