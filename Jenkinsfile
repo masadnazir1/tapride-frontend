@@ -23,7 +23,7 @@ pipeline {
 
         stage('Ensure Global TypeScript') {
             steps {
-                sh 'sudo npm install -g typescript'
+               sh 'npm install -g typescript || true'
             }
         }
 
