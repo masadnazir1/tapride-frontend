@@ -1,0 +1,141 @@
+.heroSection {
+    position: relative;
+    /* Needed for the overlay */
+    background-color: var(--primary-dark);
+    padding: 4rem 1.5rem;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    background-image: url('/images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+/* Overlay */
+.heroSection::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* top:0; right:0; bottom:0; left:0 */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* black overlay with 50% opacity */
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    /* ensure content sits above overlay */
+    z-index: 10;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+@media(min-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.textColumn {
+    z-index: 10;
+}
+
+.heading {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+@media(min-width: 768px) {
+    .heading {
+        font-size: 3.5rem;
+    }
+}
+
+.highlight {
+    color: var(--accent);
+}
+
+.description {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: #ffff;
+    margin-bottom: 2rem;
+    max-width: 36rem;
+}
+
+.searchForm {
+    display: flex;
+    max-width: 36rem;
+    background: var(--card-bg);
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.searchInput {
+    flex-grow: 1;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.searchInput:focus {
+    outline: 2px solid var(--accent);
+}
+
+.searchButton {
+    margin-left: 0.5rem;
+    background: var(--accent);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.searchButton:hover {
+    background: var(--primary-dark);
+}
+
+.graphicColumn {
+    display: none;
+}
+
+@media(min-width: 768px) {
+    .graphicColumn {
+        display: block;
+        position: relative;
+    }
+}
+
+.carGraphic {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    max-width: 400px;
+    opacity: 0.9;
+    color: #ffff;
+}
+
+.carPath {
+    fill: #fff;
+    opacity: 0.7;
+}

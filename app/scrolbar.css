@@ -1,0 +1,34 @@
+/* Webkit browsers: Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 12px;
+    /* width of vertical scrollbar */
+    height: 12px;
+    /* height of horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--muted-bg);
+    /* track background */
+    border-radius: var(--radius);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    /* draggable thumb color */
+    border-radius: var(--radius);
+    border: 3px solid var(--muted-bg);
+    /* creates padding around thumb */
+    transition: var(--transition);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    /* "auto" or "thin" */
+    scrollbar-color: var(--primary) var(--muted-bg);
+    /* thumb color, track color */
+}

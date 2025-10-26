@@ -1,0 +1,198 @@
+.section {
+    padding: 4rem 1rem;
+    font-family: "Inter", sans-serif;
+    background: var(--page-bg);
+}
+
+.wrapper {
+    margin: 0 auto;
+}
+
+.container {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Background image behind container only */
+.container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/images/hero2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 30, 60, 0.8);
+    z-index: 1;
+}
+
+.inner {
+    position: relative;
+    z-index: 2;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: white;
+}
+
+.header {
+    max-width: 700px;
+    margin: 0 auto 3rem auto;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.desc {
+    color: #d1d5db;
+    font-size: 1rem;
+    margin-top: 1rem;
+    line-height: 1.6;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.iconBox {
+    background: var(--accent);
+    color: #fff;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+}
+
+.textBox {
+    margin-left: 1rem;
+}
+
+.value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-top: 0.25rem;
+}
+
+/* Responsive */
+@media (max-width: 1280px) {
+    .inner {
+        padding: 3rem 1.5rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .card {
+        padding: 1.25rem;
+    }
+
+    .iconBox {
+        width: 56px;
+        height: 56px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .inner {
+        padding: 2.5rem 1rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .desc {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .textBox {
+        margin-left: 0;
+        margin-top: 0.75rem;
+    }
+
+    .value {
+        font-size: 1.75rem;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .desc {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .inner {
+        padding: 2rem 1rem;
+    }
+
+    .iconBox {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+    }
+
+    .value {
+        font-size: 1.5rem;
+    }
+}

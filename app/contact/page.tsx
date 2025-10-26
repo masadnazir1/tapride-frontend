@@ -36,7 +36,7 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email",
-      details: "support@tapcars.pk",
+      details: "support@TapRide.pk",
       desc: "We'll respond within 2 hours",
     },
     {
@@ -58,11 +58,12 @@ export default function ContactPage() {
       <PageHead
         title="Get in Touch"
         subtitle="We’d love to hear from you. Contact our team any time."
-        bgImage=""
-        gradientFrom="var(--primary)"
-        gradientTo="var(--primary-dark)"
+        bgImage="/images/bg.jpg"
+        overlay={true}
+        overlayColor="rgba(0, 0, 0, 0.75)" // optional light tint
+        gradientFrom="transparent"
+        gradientTo="transparent"
         height="340px"
-        overlay
       />
 
       <section className={styles.section}>

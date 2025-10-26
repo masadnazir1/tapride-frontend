@@ -1,0 +1,46 @@
+.featureRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    padding: 3rem 1rem;
+    background: var(--car-bg);
+    text-align: center;
+}
+
+.featureCard {
+    background: var(--card-bg);
+    /* border: 1px solid var(--borderColor); */
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    /* box-shadow: var(--shadow); */
+    transition: var(--transition);
+}
+
+.featureCard:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+}
+
+.icon {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.textContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.heading {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}

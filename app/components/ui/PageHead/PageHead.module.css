@@ -1,13 +1,10 @@
-/* app/components/ui/PageHead/PageHead.module.css */
-/* fully pure CSS module – no global selectors */
-
 .wrapper {
     position: relative;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: var(--pagehead-text);
+    color: #fff;
     overflow: hidden;
     background-repeat: no-repeat;
     height: var(--pagehead-height);
@@ -44,14 +41,14 @@
     font-weight: 800;
     margin: 0 0 0.6rem 0;
     line-height: 1.05;
-    color: var(--pagehead-text);
+    color: #fff;
 }
 
 .contentSubtitle {
     margin: 0;
     font-size: clamp(0.95rem, 1.4vw, 1.05rem);
     line-height: 1.6;
-    color: var(--text-secondary);
+    color: #fff;
 }
 
 /* optional blur modifier */

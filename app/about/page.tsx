@@ -8,7 +8,7 @@ export default function AboutPage() {
     <main className={styles.about}>
       {/* Page Header */}
       <PageHead
-        title="About TapCars"
+        title="About TapRide"
         subtitle="Revolutionizing car rental in Pakistan by making it fast, affordable, and accessible for everyone."
         height="45vh"
         gradientFrom="var(--primary-dark)"
@@ -24,14 +24,14 @@ export default function AboutPage() {
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>Our Mission</h2>
           <p className={styles.text}>
-            At <strong>TapCars</strong>, our mission is to redefine the car
+            At <strong>TapRide</strong>, our mission is to redefine the car
             rental experience in Pakistan. We believe transportation should be
             simple, reliable, and within reach for everyone. Our platform brings
             cutting-edge technology and transparent pricing together to make car
             rentals faster, smarter, and more customer-focused.
           </p>
 
-          <h2 className={styles.sectionTitle}>Why Choose TapCars</h2>
+          <h2 className={styles.sectionTitle}>Why Choose TapRide</h2>
           <div className={styles.featuresGrid}>
             {[
               {
@@ -42,7 +42,7 @@ export default function AboutPage() {
               {
                 title: "Nationwide Coverage",
                 description:
-                  "From Karachi to Islamabad, TapCars operates across major cities with reliable pickup and drop-off options.",
+                  "From Karachi to Islamabad, TapRide operates across major cities with reliable pickup and drop-off options.",
               },
               {
                 title: "Technology Driven",
@@ -65,7 +65,7 @@ export default function AboutPage() {
           <h2 className={styles.sectionTitle}>Our Vision</h2>
           <p className={styles.text}>
             We envision a future where car rentals are as easy and seamless as
-            booking a ride online. With TapCars, every journey starts with
+            booking a ride online. With TapRide, every journey starts with
             trust, convenience, and innovation. We aim to become Pakistan’s most
             reliable and tech-powered car rental brand, empowering travelers and
             local businesses alike.

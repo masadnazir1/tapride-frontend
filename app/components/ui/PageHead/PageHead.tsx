@@ -29,7 +29,7 @@ export default function PageHead({
   gradientTo = "var(--primary)",
   overlay = true,
   overlayColor = "rgba(0,0,0,0.35)",
-  textColor = "var(--text-primary)",
+  textColor = "#fff",
   bgImage,
   blur = false,
   className,
@@ -69,9 +69,7 @@ export default function PageHead({
       />
       <div className={styles.content}>
         <h1 style={{ color: cssVars["--pagehead-text"] }}>{title}</h1>
-        {subtitle && (
-          <p style={{ color: "var(--text-secondary)" }}>{subtitle}</p>
-        )}
+        {subtitle && <p style={{ color: "#ffff" }}>{subtitle}</p>}
         {children}
       </div>
     </section>

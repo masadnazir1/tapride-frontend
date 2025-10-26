@@ -1,108 +1,164 @@
-.footer {
-    background: var(--primary);
-    color: var(--text-on-primary, #fff);
-    padding: 3rem 2rem;
+.wrapper {
+    border-top: 1px solid var(--borderColor);
+    background: var(--card-bg);
+    padding: 4rem 1.5rem 2rem;
+    color: var(--text-primary);
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.topSection {
     display: grid;
-    gap: 1.5rem;
-    text-align: center;
-    box-shadow: var(--shadow);
-    border-radius: var(--radius);
-    transition: var(--transition);
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    border-bottom: 1px solid var(--borderColor);
+    padding-bottom: 2.5rem;
 }
 
-.footer .logo {
-    font-size: 1.6rem;
+@media(min-width: 640px) {
+    .topSection {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(min-width: 1024px) {
+    .topSection {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.logo {
+    display: flex;
+    align-items: center;
     font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-primary);
 }
 
-.nav {
+.contactDetail {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
+    align-items: flex-start;
+    gap: 0.75rem;
 }
 
-.nav a {
-    color: var(--text-on-primary, #fff);
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.nav a:hover {
-    color: var(--accent);
-}
-
-.buttons {
+.contactIcon {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    background-color: var(--accent);
+    color: white;
+    flex-shrink: 0;
 }
 
-.button {
-    padding: 0.65rem 1.5rem;
-    border-radius: var(--radius);
-    background: var(--buttons);
-    color: #fff;
-    text-decoration: none;
+.contactText {
+    display: flex;
+    flex-direction: column;
+}
+
+.contactLabel {
     font-weight: 600;
-    transition: var(--transition);
+    font-size: 0.875rem;
+    color: var(--text-primary);
 }
 
-.button:hover {
-    background: var(--buttonHover);
+.contactValue {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
 }
 
-.button.outline {
-    background: transparent;
-    border: 2px solid var(--buttons);
-    color: var(--buttons);
+.middleSection {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-top: 2.5rem;
 }
 
-.button.outline:hover {
-    background: var(--buttons);
-    color: #fff;
+@media(min-width: 768px) {
+    .middleSection {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
-.socials {
+.linkGroup h3 {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.linkGroup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.linkGroup a {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.linkGroup a:hover {
+    color: var(--primary);
+}
+
+.socialIcons {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.socialIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--text-secondary);
+    display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 1rem;
-    font-size: 1.2rem;
+    font-size: 0.625rem;
+    color: var(--text-secondary);
+    transition: color 0.25s ease, border-color 0.25s ease;
 }
 
-.socials a {
-    color: var(--text-on-primary, #fff);
-    transition: var(--transition);
+.socialIcon:hover {
+    color: var(--primary);
+    border-color: var(--primary);
 }
 
-.socials a:hover {
-    color: var(--accent);
+.downloadApp h3 {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
 }
 
-.copyright {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-top: 1rem;
+.downloadApp img {
+    border-radius: var(--radius);
+    height: 3rem;
+    margin-bottom: 0.75rem;
+    transition: transform 0.25s ease;
 }
 
-/* Responsive */
-@media (min-width: 768px) {
-    .footer {
-        grid-template-columns: repeat(3, 1fr);
-        text-align: left;
-        padding: 4rem 5rem;
-    }
+.downloadApp img:hover {
+    transform: scale(1.05);
+}
 
-    .nav {
-        justify-content: flex-start;
-    }
-
-    .socials {
-        justify-content: flex-end;
-    }
-
-    .buttons {
-        justify-content: center;
-    }
+.bottomSection {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--borderColor);
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
 }

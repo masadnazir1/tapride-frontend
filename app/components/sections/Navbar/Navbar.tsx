@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
           aria-label={menuOpen ? "Close Menu" : "Open Menu"}
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          {menuOpen ? <FaTimes color="#fff" /> : <FaBars color="#fff" />}
+          {menuOpen ? <FaTimes color="#000" /> : <FaBars color="#000" />}
         </button>
 
         {/* Logo */}
@@ -70,6 +70,14 @@ const Navbar: React.FC = () => {
         className={`${styles.mobileMenu} ${menuOpen ? styles.open : ""}`}
         aria-hidden={!menuOpen}
       >
+        <div className={styles.mobileMenueToggleWrapper}>
+          <button
+            className={styles.mobileMenueToggle}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            X
+          </button>
+        </div>
         <nav className={styles.mobileNav}>
           <Link href="/about" onClick={() => setMenuOpen(false)}>
             About

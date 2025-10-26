@@ -1,0 +1,110 @@
+.section {
+    overflow: hidden;
+    background: var(--card-bg);
+    padding: 4rem 0;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Text Column */
+.textColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.description {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: var(--text-secondary);
+    max-width: 36rem;
+    margin-bottom: 2.5rem;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .buttons {
+        flex-direction: row;
+    }
+}
+
+.buttonLink {
+    display: block;
+}
+
+.buttonImage {
+    height: 3rem;
+    border-radius: var(--radius);
+    transition: var(--transition);
+}
+
+/* Phone Column */
+.phoneColumn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 30rem;
+}
+
+@media (min-width: 768px) {
+    .phoneColumn {
+        height: 31.25rem;
+    }
+}
+
+.phoneBack,
+.phoneFront {
+    position: absolute;
+    border-radius: 2.5rem;
+    background: var(--text-secondary);
+    padding: 0.5rem;
+    box-shadow: var(--shadow);
+    width: 18rem;
+    transform: rotate(0deg);
+}
+
+.phoneBack {
+    transform: rotate(-12deg) translateX(1.5rem);
+}
+
+.phoneFront {
+    background: var(--card-bg);
+    transform: rotate(12deg) translateX(-1.5rem);
+    border: 8px solid var(--text-secondary);
+}
+
+.phoneScreenBack,
+.phoneScreenFront {
+    height: 28.75rem;
+    border-radius: 2rem;
+    background: var(--card-bg);
+}
