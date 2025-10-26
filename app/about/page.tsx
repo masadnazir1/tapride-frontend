@@ -7,16 +7,16 @@ export default function AboutPage() {
   return (
     <main className={styles.about}>
       {/* Page Header */}
+
       <PageHead
         title="About TapRide"
         subtitle="Revolutionizing car rental in Pakistan by making it fast, affordable, and accessible for everyone."
-        height="45vh"
-        gradientFrom="var(--primary-dark)"
-        gradientTo="var(--primary)"
-        overlay
-        overlayColor="rgba(0,0,0,0.5)"
-        textColor="#fff"
-        align="left"
+        bgImage="/images/bg.jpg"
+        overlay={true}
+        overlayColor="rgba(0, 0, 0, 0.75)" // optional light tint
+        gradientFrom="transparent"
+        gradientTo="transparent"
+        height="340px"
       />
 
       {/* About Content */}

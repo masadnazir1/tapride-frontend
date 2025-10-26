@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://tapride.galaxydev.pk"),
   title: "Book a Car | TapRide.pk",
   description:
     "Book rental cars instantly with TapRide.pk – easy, fast, and reliable car rental service across Pakistan.",
@@ -29,7 +30,7 @@ export const metadata = {
   openGraph: {
     title: "TapRide.pk — Car Rentals in Pakistan",
     description: "Book and manage your car rentals with ease.",
-    url: "https://tapride.pk",
+    url: "https://tapride.galaxydev.pk",
     siteName: "TapRide.pk",
     images: ["/og-image.jpg"],
     locale: "en_PK",

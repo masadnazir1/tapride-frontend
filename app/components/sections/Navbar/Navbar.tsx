@@ -2,10 +2,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { pathNames } from "@/app/utils/pathName";
 
 const Navbar: React.FC = () => {
+  const pathname = usePathname();
+  if (pathNames.includes(pathname)) return false;
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -47,11 +52,10 @@ const Navbar: React.FC = () => {
           className={`${styles.navLinks} ${menuOpen ? styles.active : ""}`}
           aria-label="Main Navigation"
         >
-          <Link href="/about">About</Link>
+          <Link href="/">Home</Link>
+          <Link href="/about">About Us</Link>
           <Link href="/fleet">Fleet</Link>
-          <Link href="/services">Services</Link>
-          <Link href="/locations">Locations</Link>
-          <Link href="/contact">Contact</Link>
+          <Link href="/contact">Contact Us</Link>
         </nav>
 
         {/* Right Actions */}
@@ -79,20 +83,14 @@ const Navbar: React.FC = () => {
           </button>
         </div>
         <nav className={styles.mobileNav}>
+          <Link href="/" onClick={() => setMenuOpen(false)}>
+            Home
+          </Link>
           <Link href="/about" onClick={() => setMenuOpen(false)}>
-            About
-          </Link>
-          <Link href="/fleet" onClick={() => setMenuOpen(false)}>
-            Fleet
-          </Link>
-          <Link href="/services" onClick={() => setMenuOpen(false)}>
-            Services
-          </Link>
-          <Link href="/locations" onClick={() => setMenuOpen(false)}>
-            Locations
+            About Us
           </Link>
           <Link href="/contact" onClick={() => setMenuOpen(false)}>
-            Contact
+            Contact Us
           </Link>
           <div className={styles.mobileActions}>
             <Link href="/login" onClick={() => setMenuOpen(false)}>

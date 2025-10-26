@@ -34,12 +34,12 @@
 .navLinks {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .navLinks a {
     color: var(--text-primary);
-    font-weight: 500;
+    font-weight: bold;
     text-decoration: none;
     transition: var(--transition);
     position: relative;

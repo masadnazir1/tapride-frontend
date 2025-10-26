@@ -1,24 +1,10 @@
+"use client";
 import React from "react";
 import styles from "./Footer.module.css";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
-
-const CarIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={styles.carIcon}
-  >
-    <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.8-.7-1.5-1.5-1.5h-1.4c-.6 0-1.1-.3-1.5-.7L14 7c-.2-.5-.7-.8-1.2-.8H9.2c-.5 0-1 .3-1.2.8L6.4 11.8c-.4.4-.9.7-1.5.7H3.5C2.7 13.5 2 14.2 2 15v3c0 .6.4 1 1 1h2" />
-    <circle cx="7" cy="17" r="2" />
-    <circle cx="17" cy="17" r="2" />
-  </svg>
-);
+import { pathNames } from "@/app/utils/pathName";
+import { usePathname } from "next/navigation";
 
 interface ContactDetailProps {
   icon: React.ReactNode;
@@ -59,6 +45,8 @@ const LinkGroup: React.FC<LinkGroupProps> = ({ title, links }) => (
 );
 
 const Footer: React.FC = () => {
+  const pathname = usePathname();
+  if (pathNames.includes(pathname)) return false;
   const usefulLinks = ["About us", "Contact us", "Gallery", "Blog", "F.A.Q"];
   const vehicles = ["Sedan", "Cabriolet", "Pickup", "Minivan", "SUV"];
 
