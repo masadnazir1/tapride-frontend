@@ -70,7 +70,7 @@ const BottnHeroSection: React.FC = () => {
             </div>
 
             {/* Column 2: Car Graphic */}
-            <div className={styles.graphicColumn} aria-hidden="true">
+            <div className={styles.graphicColumn}>
               <svg
                 viewBox="0 0 500 300"
                 className={styles.carGraphic}
