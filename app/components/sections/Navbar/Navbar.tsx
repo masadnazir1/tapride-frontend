@@ -75,14 +75,18 @@ const Navbar: React.FC = () => {
             </Link>
           )}
 
-          <div
-            className={styles.logedInUserBox}
-            onClick={() => (window.location.href = "/dashboard")}
-          >
-            <strong className={styles.fullName}>{user?.fullName}</strong>
+          {token && (
+            <div
+              className={styles.logedInUserBox}
+              onClick={() => (window.location.href = "/dashboard")}
+            >
+              <strong className={styles.fullName}>{user?.fullName}</strong>
 
-            <div className={styles.userpicture}>{user?.fullName.charAt(0)}</div>
-          </div>
+              <div className={styles.userpicture}>
+                {user?.fullName.charAt(0)}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -112,37 +116,35 @@ const Navbar: React.FC = () => {
 
           <div className={styles.mobileActions}>
             {!token && (
-              <Link
-                href="/login"
-                className={styles.loginBtn}
-                onClick={() => setMenuOpen(false)}
-              >
-                Login
-              </Link>
+              <>
+                <Link
+                  href="/login"
+                  className={styles.loginBtn}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Login
+                </Link>
+
+                <Link href="/signup" onClick={() => setMenuOpen(false)}>
+                  Sign Up
+                </Link>
+              </>
             )}
 
-            {!token && (
-              <Link
-                href="/signup"
-                className={styles.signupBtn}
-                onClick={() => setMenuOpen(false)}
+            {token && (
+              <div
+                className={styles.mobileLogedInUserBox}
+                onClick={() => (window.location.href = "/dashboard")}
               >
-                Sign Up
-              </Link>
-            )}
+                <div className={styles.userpicture}>
+                  {user?.fullName.charAt(0)}
+                </div>
 
-            <div
-              className={styles.mobileLogedInUserBox}
-              onClick={() => (window.location.href = "/dashboard")}
-            >
-              <div className={styles.userpicture}>
-                {user?.fullName.charAt(0)}
+                <strong className={styles.mobilefullName}>
+                  {user?.fullName}
+                </strong>
               </div>
-
-              <strong className={styles.mobilefullName}>
-                {user?.fullName}
-              </strong>
-            </div>
+            )}
           </div>
         </nav>
       </div>
