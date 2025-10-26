@@ -3,6 +3,7 @@ import "./globals.css";
 import "./scrolbar.css";
 import Navbar from "./components/sections/Navbar/Navbar";
 import Footer from "./components/sections/Footer/Footer";
+import { UserProvider } from "./context/UserContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,9 +47,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <UserProvider>
+          <Navbar />
+          {children}
+
+          <Footer />
+        </UserProvider>
       </body>
     </html>
   );

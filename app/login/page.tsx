@@ -6,11 +6,13 @@ import styles from "./Login.module.css";
 import Button from "../components/ui/Button/Button";
 import Input from "../components/ui/Input/Input";
 import { FaSignInAlt, FaGoogle } from "react-icons/fa";
+import { useUser } from "../context/UserContext";
 
 import Head from "next/head";
 import api from "../utils/api";
 
 export default function LoginPage() {
+  const { setUserData } = useUser();
   const [email, setEmail] = useState("masadnazir1@gmail.com");
   const [password, setPassword] = useState("masadnazir1@");
   const [remember, setRemember] = useState(false);
@@ -21,7 +23,11 @@ export default function LoginPage() {
 
     try {
       setisLoading(true);
-      const data = await api.post("/auth/user/login", { email, password });
+      const data: any = await api.post("/auth/user/login", { email, password });
+
+      setUserData(data.user, data?.token);
+
+      window.location.href = "/dashboard/bookings";
 
       setisLoading(false);
     } catch (err) {

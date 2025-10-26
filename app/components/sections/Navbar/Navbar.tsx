@@ -6,9 +6,12 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { pathNames } from "@/app/utils/pathName";
+import { useUser } from "@/app/context/UserContext";
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
+
+  const { user, token } = useUser();
   if (pathNames.includes(pathname)) return false;
 
   const [scrolled, setScrolled] = useState(false);
@@ -60,12 +63,26 @@ const Navbar: React.FC = () => {
 
         {/* Right Actions */}
         <div className={styles.actions}>
-          <Link href="/login" className={styles.loginBtn}>
-            Login
-          </Link>
-          <Link href="/signup" className={styles.signupBtn}>
-            Sign Up
-          </Link>
+          {!token && (
+            <Link href="/login" className={styles.loginBtn}>
+              Login
+            </Link>
+          )}
+
+          {!token && (
+            <Link href="/signup" className={styles.signupBtn}>
+              Sign Up
+            </Link>
+          )}
+
+          <div
+            className={styles.logedInUserBox}
+            onClick={() => (window.location.href = "/dashboard")}
+          >
+            <strong className={styles.fullName}>{user?.fullName}</strong>
+
+            <div className={styles.userpicture}>{user?.fullName.charAt(0)}</div>
+          </div>
         </div>
       </div>
 
@@ -92,13 +109,40 @@ const Navbar: React.FC = () => {
           <Link href="/contact" onClick={() => setMenuOpen(false)}>
             Contact Us
           </Link>
+
           <div className={styles.mobileActions}>
-            <Link href="/login" onClick={() => setMenuOpen(false)}>
-              Login
-            </Link>
-            <Link href="/signup" onClick={() => setMenuOpen(false)}>
-              Sign Up
-            </Link>
+            {!token && (
+              <Link
+                href="/login"
+                className={styles.loginBtn}
+                onClick={() => setMenuOpen(false)}
+              >
+                Login
+              </Link>
+            )}
+
+            {!token && (
+              <Link
+                href="/signup"
+                className={styles.signupBtn}
+                onClick={() => setMenuOpen(false)}
+              >
+                Sign Up
+              </Link>
+            )}
+
+            <div
+              className={styles.mobileLogedInUserBox}
+              onClick={() => (window.location.href = "/dashboard")}
+            >
+              <div className={styles.userpicture}>
+                {user?.fullName.charAt(0)}
+              </div>
+
+              <strong className={styles.mobilefullName}>
+                {user?.fullName}
+              </strong>
+            </div>
           </div>
         </nav>
       </div>
