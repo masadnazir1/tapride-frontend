@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "PORT=8070 next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "axios": "^1.12.2",
