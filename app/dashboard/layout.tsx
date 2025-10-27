@@ -21,6 +21,20 @@ const navItems = [
   { name: "Jobs", icon: FaBriefcase, path: "/dashboard/jobs" },
   { name: "Statistics", icon: FaChartBar, path: "/dashboard/stats" },
 ];
+const mobileNavItems = [
+  { name: "Dashboard", icon: "/icons/homeicon.png", path: "/dashboard" },
+  {
+    name: "Bookings",
+    icon: "/icons/bookings.png",
+    path: "/dashboard/bookings",
+  },
+  { name: "Jobs", icon: "/icons/jobsicon.png", path: "/dashboard/jobs" },
+  {
+    name: "Statistics",
+    icon: "/icons/statsicon.png",
+    path: "/dashboard/stats",
+  },
+];
 
 export default function DashboardLayout({
   children,
@@ -105,7 +119,7 @@ export default function DashboardLayout({
 
       {/* Mobile Bottom Nav */}
       <nav className={styles.mobileNav}>
-        {navItems.map((item) => {
+        {mobileNavItems.map((item) => {
           const Icon = item.icon;
           const active = pathname === item.path;
           return (
@@ -114,11 +128,12 @@ export default function DashboardLayout({
               href={item.path}
               className={styles.mobileLink}
             >
-              <Icon
-                className={`${styles.mobileIcon} ${
-                  active ? styles.activeMobileIcon : ""
-                }`}
-              />
+              <Image
+                src={item.icon}
+                alt={item.name}
+                width={30}
+                height={30}
+              ></Image>
             </Link>
           );
         })}
