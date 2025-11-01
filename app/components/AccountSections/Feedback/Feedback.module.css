@@ -1,0 +1,105 @@
+/* Feedback.module.css */
+.feedbackSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    width: 100%;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.title {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.ratingContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.star {
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--borderColor);
+    transition: var(--transition);
+}
+
+.star.active {
+    color: var(--accent);
+    transform: scale(1.1);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.textarea {
+    min-height: 100px;
+    resize: none;
+    padding: var(--input-padding);
+    border-radius: var(--radius);
+    border: 1px solid var(--borderColor);
+    outline: none;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+
+
+.thankYou {
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+@media (max-width: 400px) {
+    .card {
+        padding: 16px;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .star {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 200px) {
+    .card {
+        padding: 10px;
+    }
+
+    .textarea {
+        font-size: 0.75rem;
+    }
+
+    .submit {
+        font-size: 0.75rem;
+    }
+}

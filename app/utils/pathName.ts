@@ -4,4 +4,6 @@ export const pathNames: string[] = [
   "/dashboard",
   "/dashboard/profile",
   "/dashboard/bookings",
+  "/dashboard/saved",
+  "/dashboard/account",
 ];

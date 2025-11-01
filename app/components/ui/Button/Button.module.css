@@ -11,6 +11,7 @@
     transition: var(--transition);
     box-shadow: var(--shadow);
     font-size: 0.95rem;
+    width: 100%;
 }
 
 /* Base tones */

@@ -3,12 +3,11 @@
 import React, { useState, useEffect } from "react";
 import {
   FaTachometerAlt,
-  FaUser,
-  FaBriefcase,
-  FaChartBar,
+  FaHeart,
   FaSignOutAlt,
   FaCar,
   FaBars,
+  FaUser,
 } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,8 +17,8 @@ import Image from "next/image";
 const navItems = [
   { name: "Dashboard", icon: FaTachometerAlt, path: "/dashboard" },
   { name: "Bookings", icon: FaCar, path: "/dashboard/bookings" },
-  { name: "Jobs", icon: FaBriefcase, path: "/dashboard/jobs" },
-  { name: "Statistics", icon: FaChartBar, path: "/dashboard/stats" },
+  { name: "Saved", icon: FaHeart, path: "/dashboard/saved" },
+  { name: "Account", icon: FaUser, path: "/dashboard/account" },
 ];
 const mobileNavItems = [
   { name: "Dashboard", icon: "/icons/homeicon.png", path: "/dashboard" },
@@ -28,11 +27,11 @@ const mobileNavItems = [
     icon: "/icons/bookings.png",
     path: "/dashboard/bookings",
   },
-  { name: "Jobs", icon: "/icons/jobsicon.png", path: "/dashboard/jobs" },
+  { name: "Saved", icon: "/icons/heart.png", path: "/dashboard/saved" },
   {
-    name: "Statistics",
-    icon: "/icons/statsicon.png",
-    path: "/dashboard/stats",
+    name: "Account",
+    icon: "/icons/user.png",
+    path: "/dashboard/account",
   },
 ];
 

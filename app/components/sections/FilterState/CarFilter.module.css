@@ -1,0 +1,150 @@
+.filterContainer {
+    background: var(--card-bg);
+    border: 1px solid var(--borderColor);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 320px;
+    transition: var(--transition);
+}
+
+.title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filterGroup label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.filterGroup select {
+    width: 100%;
+    padding: var(--input-padding);
+    border: 1px solid var(--borderColor);
+    border-radius: var(--radius);
+    background: #fff;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.filterGroup select:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+.priceRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.priceInput {
+    width: 45%;
+    padding: var(--input-padding);
+    border: 1px solid var(--borderColor);
+    border-radius: var(--radius);
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.priceInput:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+.slider {
+    width: 100%;
+    margin-top: 6px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+@media (max-width: 1024px) {
+    .filterContainer {
+        max-width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 12px;
+    }
+
+    .filterGroup {
+        width: 48%;
+    }
+
+    .title {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+}
+
+@media (max-width: 768px) {
+    .filterContainer {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .filterGroup {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .filterContainer {
+        padding: 8px;
+        gap: 10px;
+    }
+
+    .filterGroup label {
+        font-size: 0.8rem;
+    }
+
+    .filterGroup select,
+    .priceInput {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 200px) {
+    .filterContainer {
+        padding: 4px;
+        gap: 6px;
+    }
+
+    .filterGroup label {
+        font-size: 0.7rem;
+    }
+
+    .filterGroup select,
+    .priceInput {
+        font-size: 0.7rem;
+        padding: 6px;
+    }
+
+    .priceRow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .priceInput {
+        width: 100%;
+    }
+}

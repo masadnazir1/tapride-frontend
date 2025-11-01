@@ -1,0 +1,23 @@
+.pageRoot {
+    padding: 12px 16px;
+    margin-bottom: 50px;
+}
+
+.FindSection {
+    gap: 10px !important;
+    display: flex;
+    align-items: center;
+    margin: 35px 0;
+}
+
+.searchbox {
+    width: 90%;
+}
+
+.buttonStyles {
+    width: 25%;
+}
+
+.NearBySection {
+    margin: 30px 0;
+}

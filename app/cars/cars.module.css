@@ -1,0 +1,79 @@
+.container {
+    display: flex;
+    gap: 24px;
+    margin: 5rem 0;
+    padding: 1rem 1.5rem;
+    flex-wrap: wrap;
+    /* Allows stacking on smaller screens */
+}
+
+/* Sidebar & main content ratio for large screens */
+.container> :first-child {
+    /* flex: 0 0 360px; */
+    /* CarFilter fixed width */
+    position: sticky;
+    top: 100px;
+    /* distance from top of viewport */
+    align-self: flex-start;
+    /* ensures sticky works */
+}
+
+.container> :last-child {
+    flex: 1 1 auto;
+    /* FeaturedCars fills remaining space */
+}
+
+.carscontainer {
+    padding-bottom: 10px;
+}
+
+.ButtonsPreveNext {
+    display: flex;
+    margin: 20px 0;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.FindSection {
+    gap: 10px !important;
+    display: flex;
+    align-items: center;
+
+}
+
+.searchbox {
+    width: 90%;
+}
+
+.buttonStyles {
+    width: 25%;
+}
+
+.NearBySection {
+    margin: 30px 0;
+}
+
+/* Mobile / small screens */
+@media (max-width: 924px) {
+    .container {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .container> :first-child,
+    .container> :last-child {
+        flex: 1 1 100%;
+        position: static;
+        /* disable sticky on small screens */
+    }
+}
+
+/* Extra small / narrow screens (down to 200px) */
+@media (max-width: 400px) {
+    .container {
+        margin: 3rem 0;
+        padding: 0.5rem 1rem;
+        gap: 12px;
+    }
+}

@@ -46,6 +46,12 @@ const LinkGroup: React.FC<LinkGroupProps> = ({ title, links }) => (
 
 const Footer: React.FC = () => {
   const pathname = usePathname();
+  console.log(pathname);
+
+  if (pathname === "/cars") {
+    return false;
+  }
+
   if (pathNames.includes(pathname)) return false;
   const usefulLinks = ["About us", "Contact us", "Gallery", "Blog", "F.A.Q"];
   const vehicles = ["Sedan", "Cabriolet", "Pickup", "Minivan", "SUV"];

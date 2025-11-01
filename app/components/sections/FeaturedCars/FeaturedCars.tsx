@@ -1,7 +1,14 @@
 "use client";
 import React from "react";
 import styles from "./FeaturedCars.module.css";
-import Button from "../../ui/Button/Button";
+import { useRouter } from "next/navigation";
+import {
+  FaCogs,
+  FaFan,
+  FaGasPump,
+  FaChair,
+  FaDoorClosed,
+} from "react-icons/fa";
 
 export interface CarFeature {
   name: string;
@@ -10,11 +17,18 @@ export interface CarFeature {
 
 export interface Car {
   id: number;
-  make: string;
-  type: string;
-  pricePerDay: number;
-  imageUrl: string;
-  features: CarFeature[];
+  dealer_id: number;
+  name: string;
+  description: string;
+  images: string[];
+  daily_rate: string | number;
+  fuel: string;
+  transmission: string;
+  seats: number;
+  doors: number;
+  ac: boolean;
+  badge?: string;
+  location?: string;
 }
 
 interface FeaturedCarsProps {
@@ -38,6 +52,7 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
   showButton = true,
   outlineButton = false,
 }) => {
+  const router = useRouter();
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -73,55 +88,67 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
               : styles.threeCols
           }`}
         >
-          {cars.map((car) => (
-            <div key={car.id} className={styles.card}>
-              <div className={styles.imageWrapper}>
-                <img
-                  src={car.imageUrl}
-                  alt={`${car.make} ${car.type}`}
-                  className={styles.image}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      "https://placehold.co/400x250/d1d5db/FFFFFF?text=Image+Not+Found";
-                  }}
-                />
-              </div>
+          {cars.map((car) => {
+            // Build features dynamically
+            const features: CarFeature[] = [
+              { name: car.transmission, icon: <FaCogs /> },
+              { name: car.fuel, icon: <FaGasPump /> },
+              { name: car.ac ? "AC" : "No AC", icon: <FaFan /> },
+              { name: `${car.seats} Seats`, icon: <FaChair /> },
+              { name: `${car.doors} Doors`, icon: <FaDoorClosed /> },
+            ];
 
-              <div className={styles.content}>
-                <div className={styles.topRow}>
-                  <div>
-                    <h3 className={styles.make}>{car.make}</h3>
-                    <p className={styles.type}>{car.type}</p>
-                  </div>
-                  <div className={styles.price}>
-                    <p>${car.pricePerDay}</p>
-                    <span>per day</span>
-                  </div>
+            return (
+              <div key={car.id} className={styles.card}>
+                <div className={styles.imageWrapper}>
+                  <img
+                    // src={car?.images[0]}
+                    alt={car.name}
+                    className={styles.image}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        "https://placehold.co/400x250/d1d5db/FFFFFF?text=Image+Not+Found";
+                    }}
+                  />
                 </div>
 
-                <hr className={styles.divider} />
-
-                <div className={styles.features}>
-                  {car.features.map((f) => (
-                    <div key={f.name} className={styles.feature}>
-                      {f.icon}
-                      <span>{f.name}</span>
+                <div className={styles.content}>
+                  <div className={styles.topRow}>
+                    <div>
+                      <h3 className={styles.make}>{car.name}</h3>
+                      <p className={styles.type}>{car.badge || ""}</p>
                     </div>
-                  ))}
-                </div>
+                    <div className={styles.price}>
+                      <p>${car.daily_rate}</p>
+                      <span>per day</span>
+                    </div>
+                  </div>
 
-                {showButton && (
-                  <button
-                    className={`${styles.button} ${
-                      outlineButton ? styles.outline : ""
-                    }`}
-                  >
-                    {buttonText}
-                  </button>
-                )}
+                  <hr className={styles.divider} />
+
+                  <div className={styles.features}>
+                    {features.map((f) => (
+                      <div key={f.name} className={styles.feature}>
+                        {f.icon}
+                        <span>{f.name}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {showButton && (
+                    <button
+                      onClick={() => router.replace("/car-details")}
+                      className={`${styles.button} ${
+                        outlineButton ? styles.outline : ""
+                      }`}
+                    >
+                      {buttonText}
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

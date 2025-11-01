@@ -3,6 +3,7 @@
 .container {
     background: var(--card-bg);
     min-height: 100vh;
+    padding: 10px 14px;
 }
 
 .header h1 {
