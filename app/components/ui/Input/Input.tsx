@@ -20,9 +20,13 @@ export type InputType =
   | "email"
   | "number"
   | "date"
+  | "datetime-local"
   | "file"
   | "textarea"
-  | "search";
+  | "search"
+  | "checkbox"
+  | "radio"
+  | "select";
 
 interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
@@ -35,9 +39,13 @@ interface InputProps
   error?: string;
   fullWidth?: boolean;
   rows?: number;
+  options?: { label: string; value: string }[]; // for select
 }
 
-const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
+const Input = forwardRef<
+  HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
+  InputProps
+>(
   (
     {
       label,
@@ -49,6 +57,7 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
       error,
       fullWidth = false,
       rows = 4,
+      options = [],
       className,
       ...props
     },
@@ -64,11 +73,6 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
           <Icon className={`${styles.icon} ${styles[`icon${position}`]}`} />
         );
 
-      // Special icons based on type
-      // if (type === "date" && position === "right")
-      //   return (
-      //     <FaCalendarAlt className={`${styles.icon} ${styles.iconRight}`} />
-      //   );
       if (type === "file" && position === "right")
         return (
           <FaFileUpload className={`${styles.icon} ${styles.iconRight}`} />
@@ -81,6 +85,13 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
+        );
+      if (
+        (type === "date" || type === "datetime-local") &&
+        position === "right"
+      )
+        return (
+          <FaCalendarAlt className={`${styles.icon} ${styles.iconRight}`} />
         );
       return null;
     };
@@ -116,22 +127,36 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
       ...props,
     };
 
+    const renderInput = () => {
+      if (type === "textarea")
+        return <textarea {...(commonProps as any)} rows={rows} />;
+      if (type === "select")
+        return (
+          <select {...(commonProps as any)}>
+            {options.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        );
+      if (type === "checkbox" || type === "radio")
+        return <input {...(commonProps as any)} type={type} />;
+      return (
+        <input
+          {...(commonProps as any)}
+          type={showPassword && type === "password" ? "text" : type}
+        />
+      );
+    };
+
     return (
       <div className={`${styles.wrapper} ${className || ""}`}>
         {label && <label className={styles.label}>{label}</label>}
 
         <div className={baseClass}>
           {renderIcon("left")}
-
-          {type === "textarea" ? (
-            <textarea {...(commonProps as any)} rows={rows} />
-          ) : (
-            <input
-              {...(commonProps as any)}
-              type={showPassword && type === "password" ? "text" : type}
-            />
-          )}
-
+          {renderInput()}
           {renderIcon("right")}
           {renderStatusIcon()}
         </div>

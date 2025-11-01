@@ -1,0 +1,42 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--radius);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+    color: var(--warning);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.message {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}

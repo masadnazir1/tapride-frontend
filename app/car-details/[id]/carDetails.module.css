@@ -1,0 +1,189 @@
+/* Container & Layout */
+.Container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 4rem 0;
+    padding: 1rem 1.5rem;
+}
+
+.maindetailsSection {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Left Image Slider */
+.leftImagesSlides {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mainImage {
+    width: 100%;
+    border-radius: 8px;
+    background-color: #f0eded;
+    object-fit: cover;
+    box-shadow: var(--shadow);
+}
+
+.imagesLine {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.smallImage {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 5px;
+    object-fit: cover;
+    transition: transform 0.2s ease, border 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.smallImage:hover,
+.smallImage.active {
+    transform: scale(1.05);
+    border-color: var(--primary);
+}
+
+/* Right Specifications & CTA */
+.rightSpectOverview {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.rightSpectOverview h3 {
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+.rightSpectOverview p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.specTitle {
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+/* Boxes for technical specifications */
+.boxContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.boxes {
+    background-color: var(--muted-bg);
+    color: #000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    height: 80px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    padding: 12px;
+    box-shadow: var(--shadow);
+}
+
+/* CTA Button */
+.RenTnowSection {
+    margin-top: 25px;
+}
+
+/* Related Cars */
+.related {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    width: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 876px) {
+    .maindetailsSection {
+        flex-direction: column;
+    }
+
+    .leftImagesSlides,
+    .rightSpectOverview {
+        width: 100%;
+    }
+
+    .boxContainer {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .boxes {
+        height: 70px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .Container {
+        margin: 3rem 0;
+        padding: 0.5rem 1rem;
+        gap: 10px;
+    }
+
+    .mainImage {
+        border-radius: 6px;
+    }
+
+    .smallImage {
+        width: 50px;
+        height: 50px;
+    }
+
+    .boxes {
+        height: 60px;
+        font-size: 0.75rem;
+        padding: 8px;
+    }
+
+    .rightSpectOverview h3 {
+        font-size: 1.3rem;
+    }
+
+    .rightSpectOverview p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 200px) {
+    .mainImage {
+        border-radius: 5px;
+    }
+
+    .smallImage {
+        width: 40px;
+        height: 40px;
+    }
+
+    .boxes {
+        height: 50px;
+        font-size: 0.65rem;
+        padding: 6px;
+    }
+
+    .rightSpectOverview h3 {
+        font-size: 1rem;
+    }
+
+    .rightSpectOverview p {
+        font-size: 0.65rem;
+    }
+}

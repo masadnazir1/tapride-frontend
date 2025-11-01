@@ -1,14 +1,22 @@
 "use client";
 import React from "react";
 import styles from "./FeaturedCars.module.css";
+import { useState } from "react";
+import Button from "../../ui/Button/Button";
+import { useUser } from "@/app/context/UserContext";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import api from "@/app/utils/api";
 import {
   FaCogs,
   FaFan,
   FaGasPump,
   FaChair,
+  FaHeart,
   FaDoorClosed,
 } from "react-icons/fa";
+import axios from "axios";
+import Loader from "../../ui/Loader/Loader";
 
 export interface CarFeature {
   name: string;
@@ -40,6 +48,7 @@ interface FeaturedCarsProps {
   gridCols?: 2 | 3 | 4;
   showButton?: boolean;
   outlineButton?: boolean;
+  showSave?: boolean;
 }
 
 const FeaturedCars: React.FC<FeaturedCarsProps> = ({
@@ -51,8 +60,39 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
   gridCols = 3,
   showButton = true,
   outlineButton = false,
+  showSave = true,
 }) => {
   const router = useRouter();
+  const { user } = useUser();
+  const [isloading, setisloading] = useState(false);
+  async function handleToggleSave(carId: number) {
+    setisloading(true);
+    await api
+      .post("/saved/save", {
+        userId: user?.id,
+        carId: carId,
+      })
+      .then((data: any) => {
+        toast.success(data.message);
+      })
+      .catch((err: any) => {
+        if (axios.isAxiosError(err)) {
+          if (err.status === 400) {
+            api
+              .delete("/saved/", {
+                userId: user?.id,
+                carId: carId,
+              })
+              .then((res: any) => {
+                toast.success(res.message);
+              });
+          }
+        }
+      });
+
+    setisloading(false);
+  }
+
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -102,12 +142,12 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
               <div key={car.id} className={styles.card}>
                 <div className={styles.imageWrapper}>
                   <img
-                    // src={car?.images[0]}
+                    src={car?.images[0]}
                     alt={car.name}
                     className={styles.image}
                     onError={(e) => {
                       (e.target as HTMLImageElement).src =
-                        "https://placehold.co/400x250/d1d5db/FFFFFF?text=Image+Not+Found";
+                        "/images/defaultcar.png";
                     }}
                   />
                 </div>
@@ -136,14 +176,30 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
                   </div>
 
                   {showButton && (
-                    <button
-                      onClick={() => router.replace("/car-details")}
-                      className={`${styles.button} ${
-                        outlineButton ? styles.outline : ""
-                      }`}
-                    >
-                      {buttonText}
-                    </button>
+                    <>
+                      <div className={styles.ButtonsWrapper}>
+                        <Button
+                          onClick={() => router.push(`/car-details/${car.id}`)}
+                        >
+                          {buttonText}
+                        </Button>
+
+                        {showSave && (
+                          <Button
+                            variant="outline"
+                            disabled={isloading}
+                            onClick={() => handleToggleSave(car.id)}
+                            style={{ width: "100px" }}
+                          >
+                            {isloading ? (
+                              <Loader color="#fff" />
+                            ) : (
+                              <FaHeart size="30px" />
+                            )}
+                          </Button>
+                        )}
+                      </div>
+                    </>
                   )}
                 </div>
               </div>

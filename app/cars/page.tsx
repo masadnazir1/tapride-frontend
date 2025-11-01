@@ -21,7 +21,6 @@ export default function Cars() {
       const response: any = await api.get(
         "/cars?status=available&category=Sedan&page=1&limit=10"
       );
-      console.log(response.cars);
       if (response?.success) {
         // Map API data to FeaturedCars structure
 

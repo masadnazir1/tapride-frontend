@@ -71,8 +71,8 @@ class ApiService {
     return this.axiosInstance.put<T>(url, data).then((res) => res.data);
   }
 
-  public async delete<T>(url: string) {
-    return this.axiosInstance.delete<T>(url).then((res) => res.data);
+  public async delete<T>(url: string, data?: any) {
+    return this.axiosInstance.delete<T>(url, { data }).then((res) => res.data);
   }
 }
 

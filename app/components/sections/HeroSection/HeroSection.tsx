@@ -54,13 +54,6 @@ export default function HeroSection() {
         <div className={styles.right}>
           <div className={styles.card}>
             <form className={styles.form}>
-              <Input
-                type="text"
-                placeholder="Enter city or location"
-                label="Pickup Location"
-                required
-              />
-
               <div className={styles.row}>
                 <Input type="date" label="Pickup Date" required />
                 <Input type="date" label="Return Date" required />

@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 import Image from "next/image";
 import styles from "./Login.module.css";
 import Button from "../components/ui/Button/Button";
 import Input from "../components/ui/Input/Input";
+import Loader from "../components/ui/Loader/Loader";
 import { FaSignInAlt, FaGoogle } from "react-icons/fa";
 import { useUser } from "../context/UserContext";
 
 import Head from "next/head";
 import api from "../utils/api";
+import axios from "axios";
 
 export default function LoginPage() {
   const { setUserData } = useUser();
@@ -27,13 +30,24 @@ export default function LoginPage() {
 
       setUserData(data.user, data?.token);
 
-      window.location.href = "/dashboard/bookings";
+      if (data.success) {
+        toast.success(`Login successfull for ${data.user?.fullName}`);
+      }
 
       setisLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setisLoading(false);
+
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data.message);
+      } else {
+        toast.error(
+          "Something went wrong please check credentials and try again"
+        );
+      }
     } finally {
       setisLoading(false);
+      window.location.href = "/dashboard/bookings";
     }
   };
 
@@ -114,8 +128,8 @@ export default function LoginPage() {
             </div>
 
             {isLoading ? (
-              <Button variant="outline" loading>
-                Loading...
+              <Button variant="outline" disabled={isLoading}>
+                <Loader color="#fff" />
               </Button>
             ) : (
               <Button
@@ -131,14 +145,19 @@ export default function LoginPage() {
             <div className={styles.divider}>
               <span>or continue with</span>
             </div>
-
+            {/* 
             {isLoading ? (
               ""
             ) : (
-              <Button variant="outline" icon={FaGoogle} iconPosition="left">
+              <Button
+                variant="outline"
+                icon={FaGoogle}
+                iconPosition="left"
+                disabled
+              >
                 Sign in with Google
               </Button>
-            )}
+            )} */}
           </form>
 
           <div className={styles.footer}>

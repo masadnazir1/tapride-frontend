@@ -2,17 +2,16 @@
 .feedbackSection {
     display: flex;
     justify-content: center;
-    align-items: center;
+    text-align: left;
 
 }
 
 .card {
     background: var(--card-bg);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 24px;
+
     width: 100%;
-    text-align: center;
+    text-align: left;
     transition: var(--transition);
 }
 
@@ -20,17 +19,19 @@
     font-size: 1.4rem;
     color: var(--text-primary);
     margin-bottom: 6px;
+    text-align: left;
 }
 
 .subtitle {
     color: var(--text-secondary);
     font-size: 0.9rem;
     margin-bottom: 20px;
+    text-align: left;
 }
 
 .ratingContainer {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 10px;
     margin-bottom: 16px;
 }

@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import Loader from "../components/ui/Loader/Loader";
 import Head from "next/head";
 import styles from "./Signup.module.css";
 import Button from "../components/ui/Button/Button";
@@ -26,17 +29,30 @@ export default function SignupPage() {
     e.preventDefault();
 
     try {
+      if (!form.name || !form.email || !form.phone || !form.password) {
+        toast.error("");
+        return;
+      }
       setIsLoading(true);
-      const data = await api.post("/auth/user/register", {
+      const data: any = await api.post("/auth/user/register", {
         fullName: form.name,
         email: form.email,
         phone: form.phone,
         password: form.password,
         role: "renter",
       });
-      console.log("Signup successful:", data);
+
+      if (data?.success) {
+        toast.success(`Signup successfull for the user ${form.name}`);
+      }
     } catch (err) {
-      console.error("Signup error:", err);
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 400) {
+          toast.error(err.response?.data.message);
+        } else {
+          toast.error("Something went wrong, try again");
+        }
+      }
     } finally {
       setIsLoading(false);
     }
@@ -125,8 +141,8 @@ export default function SignupPage() {
             />
 
             {isLoading ? (
-              <Button variant="outline" loading>
-                Signing Up...
+              <Button variant="outline" disabled={isLoading}>
+                <Loader color="#fff" />
               </Button>
             ) : (
               <Button

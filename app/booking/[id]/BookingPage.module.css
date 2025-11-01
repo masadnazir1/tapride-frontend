@@ -1,0 +1,141 @@
+.Container {
+    display: flex;
+    gap: 24px;
+    padding: 1rem;
+    flex-wrap: wrap;
+    background: var(--card-bg);
+    margin: 4rem 0;
+}
+
+.leftSection {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.rightSection {
+    flex: 1;
+    position: sticky;
+    top: 1rem;
+}
+
+.mainImage {
+    width: 100%;
+    border-radius: var(--radius);
+    object-fit: contain;
+    background-color: #f0eded;
+}
+
+.thumbnailLine {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border-radius: var(--radius);
+    object-fit: cover;
+    transition: transform var(--transition);
+}
+
+.thumbnail:hover {
+    transform: scale(1.1);
+    border: 2px solid var(--primary);
+}
+
+.carSpecs h2 {
+    margin: 10px 0 5px 0;
+    font-size: 1.5rem;
+}
+
+.carSpecs p {
+    color: var(--muted);
+    margin-bottom: 15px;
+}
+
+.specGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.specBox {
+    background: var(--muted-bg);
+    padding: 8px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    border: 1px solid var(--borderColor);
+    box-shadow: var(--shadow);
+}
+
+.bookingCard {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.formGroup input {
+    padding: var(--input-padding);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 876px) {
+    .Container {
+        flex-direction: column;
+    }
+
+    .rightSection {
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 400px) {
+    .thumbnail {
+        width: 50px;
+        height: 50px;
+    }
+
+    .specBox {
+        font-size: 0.8rem;
+        padding: 6px;
+    }
+
+    .carSpecs h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 200px) {
+    .thumbnail {
+        width: 40px;
+        height: 40px;
+    }
+
+    .specBox {
+        font-size: 0.65rem;
+        padding: 4px;
+    }
+
+    .carSpecs h2 {
+        font-size: 1rem;
+    }
+}

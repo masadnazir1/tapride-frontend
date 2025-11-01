@@ -7,7 +7,6 @@ const BottnHeroSection: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Searching for cars in:", city);
     // router.push(`/search?city=${city}`); // Add navigation logic
   };
 

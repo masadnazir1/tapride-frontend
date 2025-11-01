@@ -6,6 +6,7 @@
     transition: var(--transition);
     background: #fff;
     color: var(--text-primary);
+    border-bottom: 1px solid #ccc;
 }
 
 .scrolled {
@@ -18,7 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.4rem 15px;
+    padding: 0.3rem 15px;
     margin: 0 auto;
 }
 
@@ -277,7 +278,7 @@
     }
 
     .inner {
-        padding: 0.8rem 1.2rem;
+        padding: 0.3rem 1.2rem;
     }
 
     .logo {

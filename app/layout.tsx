@@ -4,7 +4,7 @@ import "./scrolbar.css";
 import Navbar from "./components/sections/Navbar/Navbar";
 import Footer from "./components/sections/Footer/Footer";
 import { UserProvider } from "./context/UserContext";
-
+import { Toaster } from "react-hot-toast";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -54,7 +54,18 @@ export default function RootLayout({
         <UserProvider>
           <Navbar />
           {children}
-
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                fontFamily: "Inter, sans-serif",
+                fontSize: "0.875rem",
+                borderRadius: "0.5rem",
+                padding: "1rem",
+              },
+            }}
+          />
           <Footer />
         </UserProvider>
       </body>

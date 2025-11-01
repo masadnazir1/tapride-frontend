@@ -1,7 +1,7 @@
 .container {
     display: flex;
     gap: 24px;
-    margin: 5rem 0;
+    margin: 4rem 0;
     padding: 1rem 1.5rem;
     flex-wrap: wrap;
     /* Allows stacking on smaller screens */
