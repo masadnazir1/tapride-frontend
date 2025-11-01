@@ -32,6 +32,7 @@ export default function LoginPage() {
 
       if (data.success) {
         toast.success(`Login successfull for ${data.user?.fullName}`);
+        window.location.href = "/dashboard/bookings";
       }
 
       setisLoading(false);
@@ -47,7 +48,6 @@ export default function LoginPage() {
       }
     } finally {
       setisLoading(false);
-      window.location.href = "/dashboard/bookings";
     }
   };
 

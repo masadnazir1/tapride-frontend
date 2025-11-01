@@ -65,6 +65,7 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
   const router = useRouter();
   const { user } = useUser();
   const [isloading, setisloading] = useState(false);
+
   async function handleToggleSave(carId: number) {
     setisloading(true);
     await api
