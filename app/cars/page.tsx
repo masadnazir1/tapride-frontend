@@ -82,7 +82,10 @@ export default function Cars() {
               />
             </div>
             <div className={styles.buttonStyles}>
-              <Button onClick={() => router.push(`/search?q=${searchTerm}`)}>
+              <Button
+                onClick={() => router.push(`/search?q=${searchTerm}`)}
+                style={{ padding: "18px" }}
+              >
                 Find
               </Button>
             </div>

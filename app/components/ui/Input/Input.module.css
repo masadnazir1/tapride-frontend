@@ -45,6 +45,30 @@
     color: var(--muted);
 }
 
+/* Hide default browser icons for specific input types */
+.input::-webkit-calendar-picker-indicator,
+.input::-webkit-clear-button,
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button,
+.input::-webkit-search-cancel-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.input[type="date"],
+.input[type="datetime-local"],
+.input[type="time"],
+.input[type="month"],
+.input[type="week"],
+.input[type="number"],
+.input[type="search"] {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+}
+
+
+
 /* Scoped file input */
 .inputWrapper input[type="file"].input {
     cursor: pointer;

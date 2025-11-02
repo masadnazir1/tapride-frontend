@@ -15,6 +15,7 @@ export default function HeroSection() {
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedCar, setSelectedCar] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,6 +23,13 @@ export default function HeroSection() {
     }, 5000); // every 5s
     return () => clearInterval(interval);
   }, [images.length]);
+
+  const carOptions = [
+    { label: "All Types", value: "All Types" },
+    { label: "Toyota Corolla", value: "corolla" },
+    { label: "Honda Civic", value: "civic" },
+    { label: "Suzuki Swift", value: "swift" },
+  ];
 
   return (
     <section className={styles.hero}>
@@ -58,22 +66,29 @@ export default function HeroSection() {
         <div className={styles.right}>
           <div className={styles.card}>
             <form className={styles.form}>
-              <div className={styles.row}>
-                <Input type="date" label="Pickup Date" required />
-                <Input type="date" label="Return Date" required />
-              </div>
+              <Input
+                label="Select a Car type"
+                type="select"
+                value={selectedCar}
+                onChange={(e) => setSelectedCar(e.target.value)}
+                options={carOptions}
+                tone="default"
+                fullWidth
+              />
+              <p className={styles.selectedCar}>
+                Selected: {selectedCar || "None"}
+              </p>
 
-              <div className={styles.field}>
-                <label>Car Type</label>
-                <select className={styles.select}>
-                  <option>All Types</option>
-                  <option>Economy</option>
-                  <option>SUV</option>
-                  <option>Luxury</option>
-                </select>
-              </div>
-
-              <Button type="submit">Search Cars</Button>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault(),
+                    (window.location.href = `/search?q=${
+                      selectedCar ? selectedCar : "c"
+                    }`);
+                }}
+              >
+                Search Cars
+              </Button>
             </form>
           </div>
         </div>

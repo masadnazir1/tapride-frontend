@@ -102,32 +102,23 @@
     gap: 1.2rem;
 }
 
-.row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+
+
+
+.selectedCar {
+    color: black;
 }
 
-.field label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary, #333);
-}
 
-.select {
-    width: 100%;
-    padding: var(--input-padding, 0.75rem);
-    border: 1px solid var(--borderColor, #ccc);
-    border-radius: var(--radius, 8px);
-    background: #fff;
-    font-size: 0.95rem;
-}
 
-.select:focus {
-    border-color: var(--primary, #009688);
-    outline: none;
+@media (min-width: 786px) {
+
+
+    .card {
+
+        max-width: 420px;
+    }
+
 }
 
 @media (max-width: 640px) {
