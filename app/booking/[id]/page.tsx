@@ -91,9 +91,18 @@ export default function BookingPage() {
 
       return;
     }
+
+    const pickupTime = new Date(pickupDate).getTime();
+    const dropoffTime = new Date(dropoffDate).getTime();
+
+    if (dropoffTime <= pickupTime) {
+      toast.error("Drop-off date must be later than pickup date.");
+      return;
+    }
+
     try {
       setisBooking(true);
-      const book = await api.post("/bookings/create", {
+      await api.post("/bookings/create", {
         startDate: pickupDate,
         endDate: dropoffDate,
         pickupLocation: pickup,

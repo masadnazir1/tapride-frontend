@@ -7,7 +7,7 @@ import styles from "./Login.module.css";
 import Button from "../components/ui/Button/Button";
 import Input from "../components/ui/Input/Input";
 import Loader from "../components/ui/Loader/Loader";
-import { FaSignInAlt, FaGoogle } from "react-icons/fa";
+import { FaSignInAlt } from "react-icons/fa";
 import { useUser } from "../context/UserContext";
 
 import Head from "next/head";
