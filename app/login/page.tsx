@@ -8,6 +8,7 @@ import Button from "../components/ui/Button/Button";
 import Input from "../components/ui/Input/Input";
 import Loader from "../components/ui/Loader/Loader";
 import { FaSignInAlt } from "react-icons/fa";
+import { local } from "../utils/localStorage";
 import { useUser } from "../context/UserContext";
 
 import Head from "next/head";
@@ -16,8 +17,8 @@ import axios from "axios";
 
 export default function LoginPage() {
   const { setUserData } = useUser();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(local.get("email") || "");
+  const [password, setPassword] = useState(local.get("password") || "");
   const [remember, setRemember] = useState(false);
   const [isLoading, setisLoading] = useState(false);
 
@@ -31,6 +32,8 @@ export default function LoginPage() {
       setUserData(data.user, data?.token);
 
       if (data.success) {
+        local.remove("email");
+        local.remove("password");
         toast.success(`Login successfull for ${data.user?.fullName}`);
         window.location.href = "/dashboard/bookings";
       }

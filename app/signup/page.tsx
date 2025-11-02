@@ -11,6 +11,7 @@ import Input from "../components/ui/Input/Input";
 import { FaUserPlus } from "react-icons/fa";
 import Image from "next/image";
 import api from "../utils/api";
+import { local } from "../utils/localStorage";
 
 export default function SignupPage() {
   const [form, setForm] = useState({
@@ -44,6 +45,9 @@ export default function SignupPage() {
 
       if (data?.success) {
         toast.success(`Signup successfull for the user ${form.name}`);
+        local.set("email", form.email);
+        local.set("password", form.password);
+        window.location.href = "/login";
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
