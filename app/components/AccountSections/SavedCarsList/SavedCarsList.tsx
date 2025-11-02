@@ -44,7 +44,7 @@ export default function SavedCarsList({
     try {
       setLoading(true);
       const res: any = await api.get(`/saved/${user?.id}`);
-      console.log(res);
+
       setCars(res.data || []);
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -61,7 +61,6 @@ export default function SavedCarsList({
 
   const handleRemove = async (carId: number) => {
     try {
-      console.log(user?.id, carId);
       setRemovingId(carId);
       await api.delete("/saved/", { userId: user?.id, carId });
       toast.success("Car removed from saved list.");
