@@ -1,0 +1,84 @@
+/* BlogCard.module.css */
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.card:hover .image {
+    transform: scale(1.05);
+}
+
+.content {
+    padding: 1.5rem;
+}
+
+.title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #111827;
+    line-height: 1.4;
+}
+
+.date {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.summary {
+    font-size: 1rem;
+    color: #374151;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+    .card {
+        border-radius: 12px;
+    }
+
+    .imageWrapper {
+        height: 180px;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 1.1rem;
+    }
+
+    .summary {
+        font-size: 0.95rem;
+    }
+}

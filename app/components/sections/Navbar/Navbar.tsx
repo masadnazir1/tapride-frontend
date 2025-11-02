@@ -57,7 +57,8 @@ const Navbar: React.FC = () => {
         >
           <Link href="/">Home</Link>
           <Link href="/about">About Us</Link>
-          <Link href="/cars">Fleet</Link>
+          <Link href="/cars">Cars</Link>
+          <Link href="/blogs">Our Blogs</Link>
           <Link href="/contact">Contact Us</Link>
         </nav>
 
@@ -112,6 +113,9 @@ const Navbar: React.FC = () => {
           </Link>
           <Link href="/about" onClick={() => setMenuOpen(false)}>
             About Us
+          </Link>
+          <Link href="/blogs" onClick={() => setMenuOpen(false)}>
+            Our Blogs
           </Link>
           <Link href="/contact" onClick={() => setMenuOpen(false)}>
             Contact Us
