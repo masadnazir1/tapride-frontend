@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Button from "../../ui/Button/Button";
-import Loader from "../../ui/Loader/Loader";
 import styles from "./SavedCarsList.module.css";
 import api from "@/app/utils/api";
 import { useUser } from "@/app/context/UserContext";
@@ -80,8 +79,42 @@ export default function SavedCarsList({
   }, [user?.id]);
 
   if (loading) return <SavedCarsSkeleton count={4} />;
-  if (error) return <div className={styles.error}>{error}</div>;
-  if (cars.length < 0) return <div className={styles.empty}>{error}</div>;
+  if (error)
+    return (
+      <div className={styles.error}>
+        {error}
+
+        <div className={styles.suggestions}>
+          <Button
+            variant="outline"
+            onClick={() => router.replace("/search?q=c")}
+          >
+            Explore Vehicles{" "}
+          </Button>
+          <Button onClick={() => router.replace("/cars")}>
+            Book A Vehicle{" "}
+          </Button>
+        </div>
+      </div>
+    );
+  if (cars.length < 0)
+    return (
+      <div className={styles.empty}>
+        {error}
+
+        <div className={styles.suggestions}>
+          <Button
+            variant="outline"
+            onClick={() => router.replace("/search?q=c")}
+          >
+            Explore Vehicles{" "}
+          </Button>
+          <Button onClick={() => router.replace("/cars")}>
+            Book A Vehicle{" "}
+          </Button>
+        </div>
+      </div>
+    );
 
   return (
     <div>

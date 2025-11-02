@@ -3,7 +3,7 @@
 .container {
     background: var(--card-bg);
     min-height: 100vh;
-    padding: 10px 14px;
+    padding: 20px 0px 100px 14px
 }
 
 .header h1 {
@@ -14,7 +14,8 @@
 .header p {
     color: var(--text-secondary);
     font-size: 0.9rem;
-    margin-bottom: 1rem;
+    margin: 1rem 0px;
+
 }
 
 /* Tabs */
@@ -115,9 +116,15 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 0.75rem;
+    gap: 10px;
 }
 
-.primaryBtn,
+
+.rebookIcon {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
 .secondaryBtn,
 .dangerBtn {
     border: none;
@@ -128,14 +135,7 @@
     transition: var(--transition);
 }
 
-.primaryBtn {
-    background: var(--primary);
-    color: white;
-}
 
-.primaryBtn:hover {
-    background: var(--primary-dark);
-}
 
 .secondaryBtn {
     background: var(--muted-bg);

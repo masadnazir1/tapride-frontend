@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Button from "../../components/ui/Button/Button";
 import Loader from "@/app/components/ui/Loader/Loader";
+import Modal from "@/app/components/ui/Modal/Modal";
 import Input from "@/app/components/ui/Input/Input";
 import api from "../../utils/api";
 import {
@@ -14,6 +15,7 @@ import {
   FaCogs,
   FaCarSide,
   FaDoorClosed,
+  FaCheckCircle,
 } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
 import styles from "./BookingPage.module.css";
@@ -51,6 +53,7 @@ export default function BookingPage() {
   const [pickupDate, setPickupDate] = useState("");
   const [dropoffDate, setDropoffDate] = useState("");
   const [isBooking, setisBooking] = useState(false);
+  const [open, setOpen] = useState(false);
 
   async function fetchCar() {
     try {
@@ -103,7 +106,7 @@ export default function BookingPage() {
 
     try {
       setisBooking(true);
-      await api.post("/bookings/create", {
+      const response: any = await api.post("/bookings/create", {
         startDate: pickupDate,
         endDate: dropoffDate,
         pickupLocation: pickup,
@@ -112,7 +115,15 @@ export default function BookingPage() {
         renterId: user?.id,
         dealerId: car?.dealer_id,
       });
-      setisBooking(false);
+
+      if (response?.success) {
+        toast.success(response?.message);
+        setOpen(!open);
+        setisBooking(false);
+      } else {
+        toast.error("Something went wrong. Please try again.");
+        setisBooking(false);
+      }
     } catch (err: any) {
       setisBooking(false);
 
@@ -243,6 +254,33 @@ export default function BookingPage() {
             </div>
           </section>
         </div>
+
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+          title="Order Placed Successfully"
+        >
+          <div className={styles.wrapper}>
+            <div className={styles.iconWrap}>
+              <FaCheckCircle className={styles.icon} />
+            </div>
+
+            <h2 className={styles.title}>Order Placed Successfully</h2>
+            <p className={styles.message}>
+              Your rent-a-car order has been placed successfully. You can check
+              your booking status anytime.
+            </p>
+
+            <div className={styles.actions}>
+              <Button onClick={() => router.replace("/dashboard/bookings")}>
+                View Status
+              </Button>
+              <Button variant="outline" onClick={() => setOpen(!open)}>
+                Close
+              </Button>
+            </div>
+          </div>
+        </Modal>
       </AuthGuard>
     </>
   );

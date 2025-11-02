@@ -1,9 +1,10 @@
 "use client";
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./SearchPage.module.css";
 import Loader from "@/app/components/ui/Loader/Loader";
 import Button from "@/app/components/ui/Button/Button";
+import Input from "../components/ui/Input/Input";
 import api from "../utils/api";
 import Head from "next/head";
 import PageHead from "../components/ui/PageHead/PageHead";
@@ -28,7 +29,7 @@ function SearchPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
-
+  const inputRef = useRef<HTMLInputElement>(null);
   const [searchTerm, setSearchTerm] = useState(query);
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,10 @@ function SearchPageContent() {
     const handler = setTimeout(() => setDebounced(searchTerm), 500);
     return () => clearTimeout(handler);
   }, [searchTerm]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (!debounced.trim()) {
@@ -123,12 +128,12 @@ function SearchPageContent() {
       <div className={styles.container}>
         <header className={styles.header}>
           <form className={styles.searchBox} onSubmit={handleSearchSubmit}>
-            <input
+            <Input
+              ref={inputRef}
               type="text"
               placeholder="Search by name, brand, type, or location..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={styles.input}
             />
             <Button style={{ width: "100px" }} variant="solid">
               Search

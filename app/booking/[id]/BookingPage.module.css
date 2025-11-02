@@ -97,6 +97,75 @@
     font-size: 0.9rem;
 }
 
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+}
+
+.iconWrap {
+    background: #e6f8ec;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    color: #16a34a;
+    font-size: 40px;
+}
+
+.title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #111;
+}
+
+.message {
+    font-size: 0.95rem;
+    color: #444;
+    max-width: 320px;
+    line-height: 1.4;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+
+
+
+
+@media (max-width: 500px) {
+    .wrapper {
+        padding: 2rem 1rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .primaryBtn,
+    .secondaryBtn {
+        width: 100%;
+    }
+}
+
+
+
+
 @media (max-width: 876px) {
     .Container {
         flex-direction: column-reverse;

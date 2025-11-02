@@ -1,11 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+import { FaArrowsRotate } from "react-icons/fa6";
+import ConfirmationModal from "@/app/components/ui/ConfirmationModal/ConfirmationModal";
+import { useRouter } from "next/navigation";
 import styles from "./bookings.module.css";
 import api from "@/app/utils/api";
-
+import Button from "@/app/components/ui/Button/Button";
 import { useUser } from "@/app/context/UserContext";
 import BookingsSkeleton from "@/app/components/Skeleton/BookingsSkeleton/BookingsSkeleton";
+import axios from "axios";
 
 type Booking = {
   id: number;
@@ -22,11 +27,14 @@ type Booking = {
 };
 
 export default function BookingsPage() {
+  const router = useRouter();
   const { user } = useUser();
   const [activeTab, setActiveTab] = useState<"upcoming" | "past">("upcoming");
   const [upcomingBookings, setUpcomingBookings] = useState<Booking[]>([]);
   const [pastBookings, setPastBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [cancelId, setcancelId] = useState(Number);
 
   const fetchBookings = async () => {
     if (!user) return;
@@ -48,6 +56,31 @@ export default function BookingsPage() {
     }
   };
 
+  async function cancelBooking(bookingId: number) {
+    if (!bookingId) {
+      return;
+    }
+    try {
+      const response: any = await api.put(`/bookings/${bookingId}/cancel`);
+      toast.success(response.message);
+
+      if (response) {
+        setOpen(!open);
+        fetchBookings();
+      }
+    } catch (err: any) {
+      if (axios.isAxiosError(err)) {
+        if (err.status === 400) {
+          toast.error(err?.response?.data.message);
+        } else
+          toast.error("Something went wrong , pleas try again"),
+            console.error("error", err);
+        setOpen(!open);
+        fetchBookings();
+      }
+    }
+  }
+
   useEffect(() => {
     fetchBookings();
   }, [user]);
@@ -57,7 +90,7 @@ export default function BookingsPage() {
       return (
         <div className={styles.emptyState}>
           <p>No {isUpcoming ? "upcoming" : "past"} bookings yet.</p>
-          <button className={styles.primaryBtn}>Book a Ride</button>
+          <Button onClick={() => router.replace("/cars")}>Book a Ride</Button>
         </div>
       );
     }
@@ -124,17 +157,31 @@ export default function BookingsPage() {
               <div className={styles.actions}>
                 {isUpcoming ? (
                   <>
-                    <button className={styles.secondaryBtn}>
-                      View Details
-                    </button>
+                    <Button variant="outline">View Details</Button>
                     {b.status.toLowerCase() !== "cancelled" && (
-                      <button className={styles.dangerBtn}>Cancel Ride</button>
+                      <Button
+                        onClick={() => {
+                          setcancelId(b?.id);
+                          setOpen(!open);
+                        }}
+                        tone="danger"
+                      >
+                        Cancel Ride
+                      </Button>
                     )}
                   </>
                 ) : (
                   <>
                     <span className={styles.fare}>PKR {b.total_price}</span>
-                    <button className={styles.secondaryBtn}>Rebook</button>
+                    <Button
+                      style={{
+                        width: "auto",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <FaArrowsRotate className={styles.rebookIcon} />
+                      Rebook
+                    </Button>
                   </>
                 )}
               </div>
@@ -180,6 +227,17 @@ export default function BookingsPage() {
           renderBookings(pastBookings, false)
         )}
       </div>
+
+      <ConfirmationModal
+        isOpen={open}
+        title="Confirmation"
+        message="Are you sure you want to cancel the Booking?"
+        confirmText="cancel Booking"
+        cancelText="Keep it"
+        onConfirm={() => cancelBooking(cancelId)}
+        onCancel={() => setOpen(false)}
+        loading={loading}
+      />
     </div>
   );
 }

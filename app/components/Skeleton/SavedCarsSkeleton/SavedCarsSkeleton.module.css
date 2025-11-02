@@ -55,3 +55,9 @@
         opacity: 1;
     }
 }
+
+@media (max-width:786px) {
+    .card {
+        width: 100%;
+    }
+}

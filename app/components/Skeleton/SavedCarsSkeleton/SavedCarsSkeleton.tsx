@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import styles from "./SavedCarsSkeleton.module.css";
 
 export default function SavedCarsSkeleton({ count = 4 }: { count?: number }) {
