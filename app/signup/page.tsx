@@ -108,6 +108,7 @@ export default function SignupPage() {
               value={form.name}
               onChange={handleChange}
               fullWidth
+              required
             />
 
             <Input
@@ -118,6 +119,7 @@ export default function SignupPage() {
               value={form.email}
               onChange={handleChange}
               fullWidth
+              required
             />
 
             <Input
@@ -128,6 +130,7 @@ export default function SignupPage() {
               value={form.phone}
               onChange={handleChange}
               fullWidth
+              required
             />
 
             <Input
@@ -138,6 +141,7 @@ export default function SignupPage() {
               value={form.password}
               onChange={handleChange}
               fullWidth
+              required
             />
 
             {isLoading ? (

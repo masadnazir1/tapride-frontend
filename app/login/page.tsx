@@ -101,6 +101,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               fullWidth
+              required
             />
 
             <Input
@@ -110,6 +111,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
+              required
             />
 
             <div className={styles.options}>
