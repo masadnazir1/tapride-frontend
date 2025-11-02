@@ -1,6 +1,5 @@
 "use client";
-import type { Metadata } from "next";
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./SearchPage.module.css";
 import Loader from "@/app/components/ui/Loader/Loader";
@@ -25,9 +24,7 @@ interface Car {
   mileage: number;
 }
 
-//
-
-export default function SearchPage() {
+function SearchPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
@@ -54,8 +51,6 @@ export default function SearchPage() {
         const res: any = await api.get(
           `/user/cars/search?q=${encodeURIComponent(debounced)}`
         );
-
-        console.log(res);
         setCars(res.cars || []);
       } catch {
         setCars([]);
@@ -75,50 +70,51 @@ export default function SearchPage() {
   return (
     <>
       <Head>
-        <title>Search Cars for Rent | Tapride</title>
+        <title>Search Cars for Rent | TapRide.pk</title>
         <meta
           name="description"
-          content="Find and book your ideal car for rent in Pakistan with Tapride. Search by brand, model, location, or features to discover affordable, verified rental cars near you."
+          content="Find and book your ideal car for rent in Pakistan with TapRide.pk. Search by brand, model, or location to discover affordable, verified rental cars."
         />
         <meta
           name="keywords"
-          content="car rental Pakistan, rent a car Lahore, rent a car Islamabad, Tapride car booking, affordable car rental, vehicle search Tapride, best car rental app Pakistan, daily car rental Pakistan, self drive car rental, car hire near me"
+          content="car rental Pakistan, rent a car Lahore, rent a car Islamabad, TapRide, car booking Pakistan, daily rental cars, car hire Pakistan, self drive car rental"
         />
-
-        <meta property="og:title" content="Search Cars for Rent | Tapride" />
+        <meta property="og:title" content="Search Cars for Rent | TapRide.pk" />
         <meta
           property="og:description"
-          content="Easily find your next ride on Tapride. Browse verified rental cars, compare prices, and book instantly across Pakistan."
+          content="Easily find verified cars for rent across Pakistan. Search by brand, city, or model — TapRide.pk makes renting simple."
         />
         <meta
           property="og:image"
-          content="https://tapride.galaxydev.pk/images/og/images/og/main-og.jpg"
+          content="https://tapride.galaxydev.pk/images/og/search-page.jpg"
         />
         <meta property="og:url" content="https://tapride.galaxydev.pk/search" />
-        <meta property="og:site_name" content="Tapride" />
+        <meta property="og:site_name" content="TapRide.pk" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_PK" />
-
-        <meta name="twitter:card" content="/logo.png" />
-        <meta name="twitter:title" content="Search Cars for Rent | Tapride" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Search Cars for Rent | TapRide.pk"
+        />
         <meta
           name="twitter:description"
-          content="Find cars for rent in Pakistan — fast, verified, and affordable. Search by brand, city, or model with Tapride."
+          content="Find verified cars for rent across Pakistan. Affordable, fast, and reliable — TapRide.pk."
         />
         <meta
           name="twitter:image"
-          content="https://tapride.galaxydev.pk/logo.png"
+          content="https://tapride.galaxydev.pk/images/og/search-page.jpg"
         />
-
         <link rel="canonical" href="https://tapride.galaxydev.pk/search" />
         <meta name="robots" content="index, follow" />
       </Head>
+
       <PageHead
         title="Find Your Perfect Ride"
-        subtitle="Search across hundreds of cars available for rent near you."
+        subtitle="Search across hundreds of verified cars available for rent near you."
         bgImage="/images/bg.jpg"
-        overlay={true}
-        overlayColor="rgba(0, 0, 0, 0.75)" // optional light tint
+        overlay
+        overlayColor="rgba(0,0,0,0.75)"
         gradientFrom="transparent"
         gradientTo="transparent"
         height="340px"
@@ -149,11 +145,12 @@ export default function SearchPage() {
             </p>
           ) : (
             <div>
-              <h3 style={{ margin: "10px 0" }}>
-                {" "}
-                Search results found for your query{" "}
-                <span style={{ color: "#16db00ff" }}>"{debounced}"</span>{" "}
-              </h3>
+              {debounced && (
+                <h3 style={{ margin: "10px 0" }}>
+                  Results for{" "}
+                  <span style={{ color: "#16db00" }}>{debounced}</span>
+                </h3>
+              )}
               <div className={styles.grid}>
                 {cars.map((car) => (
                   <div key={car.id} className={styles.card}>
@@ -185,5 +182,14 @@ export default function SearchPage() {
         </div>
       </div>
     </>
+  );
+}
+
+// Suspense wrapper — required for useSearchParams()
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <SearchPageContent />
+    </Suspense>
   );
 }
