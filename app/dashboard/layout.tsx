@@ -129,8 +129,6 @@ export default function DashboardLayout({
       {/* Mobile Bottom Nav */}
       <nav className={styles.mobileNav}>
         {mobileNavItems.map((item) => {
-          const Icon = item.icon;
-          const active = pathname === item.path;
           return (
             <Link
               key={item.name}

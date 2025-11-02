@@ -66,7 +66,7 @@ export default function dashboard() {
             />
           </div>
           <div className={styles.buttonStyles}>
-            <Button>Find</Button>
+            <Button style={{ padding: "15px" }}>Find</Button>
           </div>
         </section>
         <section className={styles.NearBySection}>
