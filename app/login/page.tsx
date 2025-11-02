@@ -16,8 +16,8 @@ import axios from "axios";
 
 export default function LoginPage() {
   const { setUserData } = useUser();
-  const [email, setEmail] = useState("masadnazir1@gmail.com");
-  const [password, setPassword] = useState("masadnazir1@");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [isLoading, setisLoading] = useState(false);
 
