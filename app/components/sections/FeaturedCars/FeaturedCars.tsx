@@ -4,6 +4,7 @@ import styles from "./FeaturedCars.module.css";
 import { useState } from "react";
 import Button from "../../ui/Button/Button";
 import { useUser } from "@/app/context/UserContext";
+import CarCardSkeleton from "../../Skeleton/CarCardSkeleton/CarCardSkeleton";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import api from "@/app/utils/api";
@@ -67,6 +68,10 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
   const [isloading, setisloading] = useState(false);
 
   async function handleToggleSave(carId: number) {
+    if (!user) {
+      window.location.href = "/login";
+      return;
+    }
     setisloading(true);
     await api
       .post("/saved/save", {
@@ -129,83 +134,89 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
               : styles.threeCols
           }`}
         >
-          {cars.map((car) => {
-            // Build features dynamically
-            const features: CarFeature[] = [
-              { name: car.transmission, icon: <FaCogs /> },
-              { name: car.fuel, icon: <FaGasPump /> },
-              { name: car.ac ? "AC" : "No AC", icon: <FaFan /> },
-              { name: `${car.seats} Seats`, icon: <FaChair /> },
-              { name: `${car.doors} Doors`, icon: <FaDoorClosed /> },
-            ];
+          {cars.length === 0
+            ? [...Array(gridCols * 2)].map((_, idx) => (
+                <CarCardSkeleton key={idx} />
+              ))
+            : cars.map((car) => {
+                // Build features dynamically
+                const features: CarFeature[] = [
+                  { name: car.transmission, icon: <FaCogs /> },
+                  { name: car.fuel, icon: <FaGasPump /> },
+                  { name: car.ac ? "AC" : "No AC", icon: <FaFan /> },
+                  { name: `${car.seats} Seats`, icon: <FaChair /> },
+                  { name: `${car.doors} Doors`, icon: <FaDoorClosed /> },
+                ];
 
-            return (
-              <div key={car.id} className={styles.card}>
-                <div className={styles.imageWrapper}>
-                  <img
-                    src={car?.images[0]}
-                    alt={car.name}
-                    className={styles.image}
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src =
-                        "/images/defaultcar.png";
-                    }}
-                  />
-                </div>
-
-                <div className={styles.content}>
-                  <div className={styles.topRow}>
-                    <div>
-                      <h3 className={styles.make}>{car.name}</h3>
-                      <p className={styles.type}>{car.badge || ""}</p>
+                return (
+                  <div key={car.id} className={styles.card}>
+                    <div className={styles.imageWrapper}>
+                      <img
+                        src={car?.images[0]}
+                        alt={car.name}
+                        className={styles.image}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "/images/defaultcar.png";
+                        }}
+                      />
                     </div>
-                    <div className={styles.price}>
-                      <p>${car.daily_rate}</p>
-                      <span>per day</span>
-                    </div>
-                  </div>
 
-                  <hr className={styles.divider} />
-
-                  <div className={styles.features}>
-                    {features.map((f) => (
-                      <div key={f.name} className={styles.feature}>
-                        {f.icon}
-                        <span>{f.name}</span>
+                    <div className={styles.content}>
+                      <div className={styles.topRow}>
+                        <div>
+                          <h3 className={styles.make}>{car.name}</h3>
+                          <p className={styles.type}>{car.badge || ""}</p>
+                        </div>
+                        <div className={styles.price}>
+                          <p>${car.daily_rate}</p>
+                          <span>per day</span>
+                        </div>
                       </div>
-                    ))}
-                  </div>
 
-                  {showButton && (
-                    <>
-                      <div className={styles.ButtonsWrapper}>
-                        <Button
-                          onClick={() => router.push(`/car-details/${car.id}`)}
-                        >
-                          {buttonText}
-                        </Button>
+                      <hr className={styles.divider} />
 
-                        {showSave && (
-                          <Button
-                            variant="outline"
-                            disabled={isloading}
-                            onClick={() => handleToggleSave(car.id)}
-                            style={{ width: "100px" }}
-                          >
-                            {isloading ? (
-                              <Loader color="#fff" />
-                            ) : (
-                              <FaHeart size="30px" />
+                      <div className={styles.features}>
+                        {features.map((f) => (
+                          <div key={f.name} className={styles.feature}>
+                            {f.icon}
+                            <span>{f.name}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {showButton && (
+                        <>
+                          <div className={styles.ButtonsWrapper}>
+                            <Button
+                              onClick={() =>
+                                router.push(`/car-details/${car.id}`)
+                              }
+                            >
+                              {buttonText}
+                            </Button>
+
+                            {showSave && (
+                              <Button
+                                variant="outline"
+                                disabled={isloading}
+                                onClick={() => handleToggleSave(car.id)}
+                                style={{ width: "100px" }}
+                              >
+                                {isloading ? (
+                                  <Loader color="#fff" />
+                                ) : (
+                                  <FaHeart size="30px" />
+                                )}
+                              </Button>
                             )}
-                          </Button>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
         </div>
       </div>
     </section>

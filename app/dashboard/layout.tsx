@@ -16,6 +16,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./layout.module.css";
 import Image from "next/image";
+import AuthGuard from "../utils/AuthGuard";
 
 const navItems = [
   { name: "Dashboard", icon: FaTachometerAlt, path: "/dashboard" },
@@ -69,92 +70,101 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className={styles.container}>
-      {/* Sidebar */}
-      <aside
-        className={`${styles.sidebar} ${
-          collapsed ? styles.collapsed : styles.expanded
-        }`}
-      >
-        <div>
-          <div className={styles.sidebarHeader}>
-            <span
-              className={`${styles.brand} ${
-                collapsed ? styles.hiddenBrand : ""
-              }`}
-              onClick={() => (window.location.href = "/")}
-            >
-              <Image
-                src="/logo.png"
-                width={100}
-                height={50}
-                alt="TapRide"
-                loading="eager"
-              />
-            </span>
-            <button onClick={handleToggleCollapse} className={styles.toggleBtn}>
-              <FaBars />
-            </button>
-          </div>
+    <>
+      <AuthGuard>
+        <div className={styles.container}>
+          {/* Sidebar */}
+          <aside
+            className={`${styles.sidebar} ${
+              collapsed ? styles.collapsed : styles.expanded
+            }`}
+          >
+            <div>
+              <div className={styles.sidebarHeader}>
+                <span
+                  className={`${styles.brand} ${
+                    collapsed ? styles.hiddenBrand : ""
+                  }`}
+                  onClick={() => (window.location.href = "/")}
+                >
+                  <Image
+                    src="/logo.png"
+                    width={100}
+                    height={50}
+                    alt="TapRide"
+                    loading="eager"
+                  />
+                </span>
+                <button
+                  onClick={handleToggleCollapse}
+                  className={styles.toggleBtn}
+                >
+                  <FaBars />
+                </button>
+              </div>
 
-          <nav className={styles.nav}>
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const active = pathname === item.path;
+              <nav className={styles.nav}>
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  const active = pathname === item.path;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.path}
+                      className={`${styles.navLink} ${
+                        active ? styles.active : ""
+                      }`}
+                    >
+                      <Icon className="text-lg" />
+                      {!collapsed && <span>{item.name}</span>}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+
+            <div className={styles.logout}>
+              <Button tone="danger" onClick={() => setOpen(true)}>
+                <FaSignOutAlt className="text-lg" />
+                {!collapsed && <span>Logout</span>}
+              </Button>
+            </div>
+          </aside>
+
+          {/* Main Content */}
+          <main className={styles.main}>{children}</main>
+
+          {/* Mobile Bottom Nav */}
+          <nav className={styles.mobileNav}>
+            {mobileNavItems.map((item) => {
               return (
                 <Link
                   key={item.name}
                   href={item.path}
-                  className={`${styles.navLink} ${active ? styles.active : ""}`}
+                  className={styles.mobileLink}
                 >
-                  <Icon className="text-lg" />
-                  {!collapsed && <span>{item.name}</span>}
+                  <Image
+                    src={item.icon}
+                    alt={item.name}
+                    width={30}
+                    height={30}
+                  ></Image>
                 </Link>
               );
             })}
           </nav>
+          <ConfirmationModal
+            isOpen={open}
+            title="Logout Confirmation"
+            message="Are you sure you want to logout?"
+            confirmText="Logout"
+            cancelText="Cancel"
+            onConfirm={handleLogout}
+            onCancel={() => setOpen(false)}
+            loading={loading}
+          />
         </div>
-
-        <div className={styles.logout}>
-          <Button tone="danger" onClick={() => setOpen(true)}>
-            <FaSignOutAlt className="text-lg" />
-            {!collapsed && <span>Logout</span>}
-          </Button>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className={styles.main}>{children}</main>
-
-      {/* Mobile Bottom Nav */}
-      <nav className={styles.mobileNav}>
-        {mobileNavItems.map((item) => {
-          return (
-            <Link
-              key={item.name}
-              href={item.path}
-              className={styles.mobileLink}
-            >
-              <Image
-                src={item.icon}
-                alt={item.name}
-                width={30}
-                height={30}
-              ></Image>
-            </Link>
-          );
-        })}
-      </nav>
-      <ConfirmationModal
-        isOpen={open}
-        title="Logout Confirmation"
-        message="Are you sure you want to logout?"
-        confirmText="Logout"
-        cancelText="Cancel"
-        onConfirm={handleLogout}
-        onCancel={() => setOpen(false)}
-        loading={loading}
-      />
-    </div>
+      </AuthGuard>
+    </>
   );
 }

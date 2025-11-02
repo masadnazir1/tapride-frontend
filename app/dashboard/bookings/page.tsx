@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import styles from "./bookings.module.css";
 import api from "@/app/utils/api";
-import Image from "next/image";
+
 import { useUser } from "@/app/context/UserContext";
+import BookingsSkeleton from "@/app/components/Skeleton/BookingsSkeleton/BookingsSkeleton";
 
 type Booking = {
   id: number;
@@ -172,7 +173,7 @@ export default function BookingsPage() {
 
       <div className={styles.content}>
         {loading ? (
-          <p style={{ textAlign: "center" }}>Loading...</p>
+          <BookingsSkeleton count={3} />
         ) : activeTab === "upcoming" ? (
           renderBookings(upcomingBookings, true)
         ) : (

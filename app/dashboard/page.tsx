@@ -1,5 +1,4 @@
 "use client";
-import { useUser } from "../context/UserContext";
 import AccountNavBar from "../components/sections/Accountnavbar/AccountNavBar";
 import styles from "./dashboard.module.css";
 import Input from "../components/ui/Input/Input";
@@ -13,8 +12,6 @@ import Feedback from "../components/AccountSections/Feedback/Feedback";
 import api from "../utils/api";
 
 export default function dashboard() {
-  const { user } = useUser();
-
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(false);
 

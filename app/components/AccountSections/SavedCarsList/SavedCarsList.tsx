@@ -10,6 +10,7 @@ import api from "@/app/utils/api";
 import { useUser } from "@/app/context/UserContext";
 import { FaTrash } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import SavedCarsSkeleton from "../../Skeleton/SavedCarsSkeleton/SavedCarsSkeleton";
 
 export interface CarItem {
   id: number;
@@ -79,7 +80,7 @@ export default function SavedCarsList({
     }
   }, [user?.id]);
 
-  if (loading) return <Loader />;
+  if (loading) return <SavedCarsSkeleton count={4} />;
   if (error) return <div className={styles.error}>{error}</div>;
   if (cars.length < 0) return <div className={styles.empty}>{error}</div>;
 

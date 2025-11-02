@@ -19,7 +19,7 @@
 }
 
 .title {
-    font-size: 2rem;
+    font-size: 100%;
     font-weight: 700;
     color: var(--text-primary);
 }
@@ -198,7 +198,7 @@
 
 @media (max-width: 768px) {
     .title {
-        font-size: 1.5rem;
+        font-size: 100%;
     }
 
 }

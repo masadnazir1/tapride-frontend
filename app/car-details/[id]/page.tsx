@@ -4,6 +4,7 @@ import styles from "./carDetails.module.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
+import CarDetailsSkeleton from "@/app/components/Skeleton/CarDetailsSkeleton/CarDetailsSkeleton";
 import FeaturedCars, {
   Car,
 } from "../../components/sections/FeaturedCars/FeaturedCars";
@@ -117,7 +118,11 @@ export default function CarDetails() {
 
   if (loading || !car)
     return (
-      <div style={{ textAlign: "center", marginTop: "5rem" }}>Loading...</div>
+      <>
+        <div style={{ margin: "5rem 2rem" }}>
+          <CarDetailsSkeleton />
+        </div>
+      </>
     );
 
   return (

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import Image from "next/image";
 import Button from "../../components/ui/Button/Button";
 import Loader from "@/app/components/ui/Loader/Loader";
 import Input from "@/app/components/ui/Input/Input";
@@ -20,6 +19,8 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import styles from "./BookingPage.module.css";
 import { useUser } from "@/app/context/UserContext";
 import axios from "axios";
+import AuthGuard from "@/app/utils/AuthGuard";
+import CarDetailsSkeleton from "@/app/components/Skeleton/CarDetailsSkeleton/CarDetailsSkeleton";
 
 interface ApiCar {
   id: number;
@@ -139,104 +140,110 @@ export default function BookingPage() {
 
   if (!car)
     return (
-      <div style={{ textAlign: "center", marginTop: "5rem" }}>Loading...</div>
+      <div style={{ margin: "5rem 2rem" }}>
+        <CarDetailsSkeleton />
+      </div>
     );
 
   return (
-    <div className={styles.Container}>
-      <section className={styles.leftSection}>
-        <img
-          src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${sliderMain}`}
-          alt={car.name}
-          width={1000}
-          height={400}
-          className={styles.mainImage}
-        />
-        <div className={styles.thumbnailLine}>
-          {imageSlider.map((img, idx) => (
+    <>
+      <AuthGuard>
+        <div className={styles.Container}>
+          <section className={styles.leftSection}>
             <img
-              key={idx}
-              src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${img}`}
-              alt="thumbnail"
-              width={80}
-              height={80}
-              className={styles.thumbnail}
-              onClick={() => setSliderMain(img)}
+              src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${sliderMain}`}
+              alt={car.name}
+              width={1000}
+              height={400}
+              className={styles.mainImage}
             />
-          ))}
-        </div>
-        <div className={styles.carSpecs}>
-          <h2>{car.name}</h2>
-          <p>{car.description}</p>
-          <div className={styles.specGrid}>
-            <div className={styles.specBox}>
-              <FaCogs /> {car.transmission}
+            <div className={styles.thumbnailLine}>
+              {imageSlider.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${img}`}
+                  alt="thumbnail"
+                  width={80}
+                  height={80}
+                  className={styles.thumbnail}
+                  onClick={() => setSliderMain(img)}
+                />
+              ))}
             </div>
-            <div className={styles.specBox}>
-              <FaGasPump /> {car.fuel}
+            <div className={styles.carSpecs}>
+              <h2>{car.name}</h2>
+              <p>{car.description}</p>
+              <div className={styles.specGrid}>
+                <div className={styles.specBox}>
+                  <FaCogs /> {car.transmission}
+                </div>
+                <div className={styles.specBox}>
+                  <FaGasPump /> {car.fuel}
+                </div>
+                <div className={styles.specBox}>
+                  <BsFillPeopleFill /> {car.seats} seats
+                </div>
+                <div className={styles.specBox}>
+                  <FaDoorClosed /> {car.doors} doors
+                </div>
+                <div className={styles.specBox}>
+                  <FaSnowflake /> {car.ac ? "AC" : "No AC"}
+                </div>
+                <div className={styles.specBox}>
+                  <FaCarSide /> {car.year}
+                </div>
+              </div>
             </div>
-            <div className={styles.specBox}>
-              <BsFillPeopleFill /> {car.seats} seats
-            </div>
-            <div className={styles.specBox}>
-              <FaDoorClosed /> {car.doors} doors
-            </div>
-            <div className={styles.specBox}>
-              <FaSnowflake /> {car.ac ? "AC" : "No AC"}
-            </div>
-            <div className={styles.specBox}>
-              <FaCarSide /> {car.year}
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <section className={styles.rightSection}>
-        <div className={styles.bookingCard}>
-          <h3>Book This Car</h3>
-          <div className={styles.formGroup}>
-            <label>Pickup Location</label>
-            <Input
-              type="text"
-              placeholder="City or Airport"
-              value={pickup}
-              onChange={(e) => setPickup(e.target.value)}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Drop-off Location</label>
-            <Input
-              type="text"
-              placeholder="City or Airport"
-              value={dropoff}
-              onChange={(e) => setDropoff(e.target.value)}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Pickup Date & Time</label>
-            <Input
-              type="datetime-local"
-              value={pickupDate}
-              onChange={(e) => setPickupDate(e.target.value)}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Drop-off Date & Time</label>
-            <Input
-              type="datetime-local"
-              value={dropoffDate}
-              onChange={(e) => setDropoffDate(e.target.value)}
-            />
-          </div>
-          <Button onClick={createBooking} disabled={isBooking}>
-            {isBooking ? (
-              <Loader color="#ffffffff" />
-            ) : (
-              `Confirm Booking – PKR ${car.daily_rate}/day`
-            )}
-          </Button>
+          <section className={styles.rightSection}>
+            <div className={styles.bookingCard}>
+              <h3>Book This Car</h3>
+              <div className={styles.formGroup}>
+                <label>Pickup Location</label>
+                <Input
+                  type="text"
+                  placeholder="City or Airport"
+                  value={pickup}
+                  onChange={(e) => setPickup(e.target.value)}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label>Drop-off Location</label>
+                <Input
+                  type="text"
+                  placeholder="City or Airport"
+                  value={dropoff}
+                  onChange={(e) => setDropoff(e.target.value)}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label>Pickup Date & Time</label>
+                <Input
+                  type="datetime-local"
+                  value={pickupDate}
+                  onChange={(e) => setPickupDate(e.target.value)}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label>Drop-off Date & Time</label>
+                <Input
+                  type="datetime-local"
+                  value={dropoffDate}
+                  onChange={(e) => setDropoffDate(e.target.value)}
+                />
+              </div>
+              <Button onClick={createBooking} disabled={isBooking}>
+                {isBooking ? (
+                  <Loader color="#ffffffff" />
+                ) : (
+                  `Confirm Booking – PKR ${car.daily_rate}/day`
+                )}
+              </Button>
+            </div>
+          </section>
         </div>
-      </section>
-    </div>
+      </AuthGuard>
+    </>
   );
 }
