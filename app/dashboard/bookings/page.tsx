@@ -104,7 +104,8 @@ export default function BookingsPage() {
               {b.car && (
                 <div className={styles.driver}>
                   <p>{b.car.name}</p>
-                  <Image
+
+                  <img
                     src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${b.car.images[0]}`}
                     alt={b.car.name}
                     width={1000}
@@ -112,7 +113,9 @@ export default function BookingsPage() {
                     style={{
                       width: "100%",
                       borderRadius: "8px",
-                      marginTop: "0.25rem",
+                      marginTop: "1.5rem",
+                      height: "auto",
+                      maxHeight: "250",
                     }}
                   />
                 </div>

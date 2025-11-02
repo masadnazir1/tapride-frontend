@@ -145,7 +145,7 @@ export default function BookingPage() {
   return (
     <div className={styles.Container}>
       <section className={styles.leftSection}>
-        <Image
+        <img
           src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${sliderMain}`}
           alt={car.name}
           width={1000}
@@ -154,7 +154,7 @@ export default function BookingPage() {
         />
         <div className={styles.thumbnailLine}>
           {imageSlider.map((img, idx) => (
-            <Image
+            <img
               key={idx}
               src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${img}`}
               alt="thumbnail"

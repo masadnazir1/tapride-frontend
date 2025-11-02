@@ -99,7 +99,8 @@
 
 @media (max-width: 876px) {
     .Container {
-        flex-direction: column;
+        flex-direction: column-reverse;
+        /* Form first, images after */
     }
 
     .rightSection {

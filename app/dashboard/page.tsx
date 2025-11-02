@@ -5,6 +5,7 @@ import styles from "./dashboard.module.css";
 import Input from "../components/ui/Input/Input";
 import Button from "../components/ui/Button/Button";
 import { useEffect, useState } from "react";
+
 import FeaturedCars, {
   Car,
 } from "../components/sections/FeaturedCars/FeaturedCars";

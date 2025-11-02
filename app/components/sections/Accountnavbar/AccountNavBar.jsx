@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@/app/context/UserContext";
 import styles from "./AccountNavBar.module.css";
+import { useRouter } from "next/navigation";
 
 export default function AccountNavBar() {
+  const router = useRouter();
   const { user } = useUser();
   const [greeting, setGreeting] = useState("");
 
@@ -27,7 +29,10 @@ export default function AccountNavBar() {
         </div>
       </div>
 
-      <div className={styles.right}>
+      <div
+        className={styles.right}
+        onClick={() => router.replace("/dashboard/account")}
+      >
         <div className={styles.userAvatar}>
           {user?.fullName ? user.fullName.charAt(0).toUpperCase() : "G"}
         </div>

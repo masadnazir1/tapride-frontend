@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import styles from "./carDetails.module.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -125,7 +124,7 @@ export default function CarDetails() {
     <div className={styles.Container}>
       <section className={styles.maindetailsSection}>
         <div className={styles.leftImagesSlides}>
-          <Image
+          <img
             src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${sliderMain}`}
             alt={car.name}
             width={1000}
@@ -135,7 +134,7 @@ export default function CarDetails() {
 
           <div className={styles.imagesLine}>
             {imageSlider.map((img, index) => (
-              <Image
+              <img
                 key={index}
                 src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${img}`}
                 alt="thumbnail"

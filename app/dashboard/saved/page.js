@@ -2,6 +2,8 @@
 import SavedCarsList from "../../components/AccountSections/SavedCarsList/SavedCarsList";
 import { useUser } from "../../context/UserContext";
 import { useRouter } from "next/navigation";
+import AccountNavBar from "../../components/sections/Accountnavbar/AccountNavBar";
+
 import styles from "./saved.module.css";
 
 export default function saved() {
@@ -10,10 +12,13 @@ export default function saved() {
   return (
     <>
       <main className={styles.container}>
-        <SavedCarsList
-          title="My Saved Cars"
-          onCarClick={(car) => router.push(`/car-details/${car.car_id}`)}
-        />
+        <AccountNavBar />
+        <div className={styles.SavedCarsListBox}>
+          <SavedCarsList
+            title="My Saved Cars"
+            onCarClick={(car) => router.push(`/car-details/${car.car_id}`)}
+          />
+        </div>
       </main>
     </>
   );
