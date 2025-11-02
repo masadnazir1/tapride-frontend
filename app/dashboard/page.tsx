@@ -4,6 +4,7 @@ import styles from "./dashboard.module.css";
 import Input from "../components/ui/Input/Input";
 import Button from "../components/ui/Button/Button";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import FeaturedCars, {
   Car,
@@ -12,8 +13,10 @@ import Feedback from "../components/AccountSections/Feedback/Feedback";
 import api from "../utils/api";
 
 export default function dashboard() {
+  const router = useRouter();
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setsearchTerm] = useState("");
 
   async function getCars() {
     try {
@@ -61,10 +64,17 @@ export default function dashboard() {
             <Input
               type="search"
               placeholder="Start your day with a smooth ride"
+              value={searchTerm}
+              onChange={(e) => setsearchTerm(e.target.value)}
             />
           </div>
           <div className={styles.buttonStyles}>
-            <Button style={{ padding: "15px" }}>Find</Button>
+            <Button
+              style={{ padding: "15px" }}
+              onClick={() => router.push(`/search?q=${searchTerm}`)}
+            >
+              Find
+            </Button>
           </div>
         </section>
         <section className={styles.NearBySection}>

@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import styles from "./BottnHeroSection.module.css";
+import { useRouter } from "next/navigation";
 
 const BottnHeroSection: React.FC = () => {
+  const router = useRouter();
   const [city, setCity] = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // router.push(`/search?city=${city}`); // Add navigation logic
+
+    //search?q=lahore
+    router.push(`/search?q=${city}`); // Add navigation logic
   };
 
   return (

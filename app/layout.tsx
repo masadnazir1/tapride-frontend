@@ -17,25 +17,77 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   metadataBase: new URL("https://tapride.galaxydev.pk"),
-  title: "Book a Car | TapRide.pk",
+  title: {
+    default: "Book a Car | TapRide.pk",
+    template: "%s | TapRide.pk",
+  },
   description:
-    "Book rental cars instantly with TapRide.pk – easy, fast, and reliable car rental service across Pakistan.",
+    "Book verified rental cars instantly with TapRide.pk — Pakistan’s trusted car rental platform for daily, weekly, and monthly rides.",
   manifest: "/manifest.json",
   keywords: [
-    "car rental",
     "TapRide",
-    "Pakistan",
-    "rent a car",
+    "car rental Pakistan",
+    "rent a car Lahore",
+    "rent a car Karachi",
+    "rent a car Islamabad",
+    "self drive car rental",
     "book a car online",
+    "TapRide.pk",
+    "galaxy",
+    "dev",
+    "galaxydev.pk",
+    "pk",
+    "sasti",
+    "cheap",
+    "sasti cars",
+    "gari",
+    "affordable car hire Pakistan",
   ],
   openGraph: {
-    title: "TapRide.pk — Car Rentals in Pakistan",
-    description: "Book and manage your car rentals with ease.",
+    title: "Book a Car Online | TapRide.pk — Reliable Car Rentals in Pakistan",
+    description:
+      "Browse, compare, and book cars for rent across Pakistan with TapRide.pk. Affordable, fast, and fully verified rentals.",
     url: "https://tapride.galaxydev.pk",
     siteName: "TapRide.pk",
-    images: ["/og-image.jpg"],
+    images: [
+      {
+        url: "https://tapride.galaxydev.pk/images/og/main-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Book cars for rent in Pakistan — TapRide.pk",
+      },
+    ],
     locale: "en_PK",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@TapRidePK",
+    title: "Book a Car with TapRide.pk",
+    description:
+      "Instant car rental booking platform in Pakistan — rent cars safely and easily through TapRide.pk.",
+    images: ["https://tapride.galaxydev.pk/images/og/main-og.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      maxSnippet: -1,
+      maxImagePreview: "large",
+      maxVideoPreview: -1,
+    },
+  },
+  alternates: {
+    canonical: "https://tapride.galaxydev.pk",
+    languages: {
+      "en-PK": "https://tapride.galaxydev.pk",
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -48,7 +100,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#19ce43ff" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <UserProvider>

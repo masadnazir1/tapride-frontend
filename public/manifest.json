@@ -1,7 +1,8 @@
 {
   "name": "TapRide.pk - Car Rentals in Pakistan",
   "short_name": "TapRide",
-  "description": "Book rental cars instantly with TapRide.pk – easy, fast, and reliable car rental service across Pakistan.",
+  "description": 
+      "Instant car rental booking platform in Pakistan — rent cars safely and easily through TapRide.pk.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

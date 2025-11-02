@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import Button from "../../ui/Button/Button";
 import Input from "../../ui/Input/Input";
 import styles from "./HeroSection.module.css";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
+  const router = useRouter();
   const images = [
     "/images/hero1.jpg",
     "/images/hero2.jpg",
@@ -46,8 +48,10 @@ export default function HeroSection() {
             behind the wheel in minutes.
           </p>
           <div className={styles.buttons}>
-            <Button>Book Now</Button>
-            <Button variant="outline">Learn More</Button>
+            <Button onClick={() => router.replace("/cars")}>Book Now</Button>
+            <Button onClick={() => router.replace("/about")} variant="outline">
+              Learn More
+            </Button>
           </div>
         </div>
 

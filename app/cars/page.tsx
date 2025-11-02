@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import FeaturedCars, {
   Car,
 } from "../components/sections/FeaturedCars/FeaturedCars";
+import { useRouter } from "next/navigation";
 
 import PageHead from "../components/ui/PageHead/PageHead";
 import Button from "../components/ui/Button/Button";
@@ -12,8 +13,11 @@ import Input from "../components/ui/Input/Input";
 import api from "../utils/api";
 
 export default function Cars() {
+  const router = useRouter();
+
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setsearchTerm] = useState("");
 
   async function getCars() {
     try {
@@ -73,10 +77,14 @@ export default function Cars() {
               <Input
                 type="search"
                 placeholder="Start your day with a smooth ride"
+                value={searchTerm}
+                onChange={(e) => setsearchTerm(e.target.value)}
               />
             </div>
             <div className={styles.buttonStyles}>
-              <Button>Find</Button>
+              <Button onClick={() => router.push(`/search?q=${searchTerm}`)}>
+                Find
+              </Button>
             </div>
           </section>
 

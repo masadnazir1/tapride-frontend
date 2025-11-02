@@ -56,8 +56,9 @@ const Navbar: React.FC = () => {
           aria-label="Main Navigation"
         >
           <Link href="/">Home</Link>
-          <Link href="/about">About Us</Link>
+          <Link href="/search">Search Cars</Link>
           <Link href="/cars">Cars</Link>
+          <Link href="/about">About Us</Link>
           <Link href="/blogs">Our Blogs</Link>
           <Link href="/contact">Contact Us</Link>
         </nav>
@@ -107,6 +108,9 @@ const Navbar: React.FC = () => {
         <nav className={styles.mobileNav}>
           <Link href="/" onClick={() => setMenuOpen(false)}>
             Home
+          </Link>
+          <Link href="/search" onClick={() => setMenuOpen(false)}>
+            Search Cars
           </Link>
           <Link href="/cars" onClick={() => setMenuOpen(false)}>
             Cars
