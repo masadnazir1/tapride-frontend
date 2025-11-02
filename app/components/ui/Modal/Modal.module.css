@@ -66,4 +66,8 @@
     .content {
         padding: 20px 16px;
     }
+
+    .overlay {
+        padding: 0;
+    }
 }
