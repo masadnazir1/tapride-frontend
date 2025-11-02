@@ -59,7 +59,6 @@ export default function SavedCarsList({
   };
 
   const handleRemove = async (carId: number) => {
-    console.log(carId);
     try {
       console.log(user?.id, carId);
       setRemovingId(carId);

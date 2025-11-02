@@ -131,7 +131,6 @@ export default function CarDetails() {
             width={1000}
             height={300}
             className={styles.mainImage}
-            unoptimized
           />
 
           <div className={styles.imagesLine}>
@@ -143,7 +142,6 @@ export default function CarDetails() {
                 width={100}
                 height={200}
                 className={styles.smallImage}
-                unoptimized
                 onClick={() => setSliderImage(img)}
               />
             ))}

@@ -151,7 +151,6 @@ export default function BookingPage() {
           width={1000}
           height={400}
           className={styles.mainImage}
-          unoptimized
         />
         <div className={styles.thumbnailLine}>
           {imageSlider.map((img, idx) => (
@@ -162,7 +161,6 @@ export default function BookingPage() {
               width={80}
               height={80}
               className={styles.thumbnail}
-              unoptimized
               onClick={() => setSliderMain(img)}
             />
           ))}
