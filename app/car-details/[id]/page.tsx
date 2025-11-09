@@ -49,6 +49,7 @@ export default function CarDetails() {
   const [car, setCar] = useState<ApiCar | null>(null);
   const [relatedCars, setRelatedCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [relatedLoading, setRelatedLoading] = useState<boolean>(false);
   const [imageSlider, setImageSlider] = useState<string[]>([]);
   const [sliderMain, setSliderMain] = useState<string>("");
   const [totalPage, setTotalPage] = useState<number>(1);
@@ -76,6 +77,7 @@ export default function CarDetails() {
 
   async function getRelatedCars(page: number) {
     try {
+      setRelatedLoading(true);
       const response: any = await api.get(
         `/cars?status=available&category=Sedan&${page}=1&limit=3`
       );
@@ -96,10 +98,17 @@ export default function CarDetails() {
             { name: c.ac ? "AC" : "No AC", icon: <FaSnowflake /> },
           ],
         }));
+
         setRelatedCars(mappedCars);
+
+        setRelatedLoading(false);
       }
     } catch (err) {
       console.error("Failed to fetch related cars:", err);
+      setRelatedCars([]);
+      setRelatedLoading(false); // always reset loading state
+    } finally {
+      setRelatedLoading(false); // always reset loading state
     }
   }
 
@@ -197,11 +206,11 @@ export default function CarDetails() {
       </section>
 
       <section className={styles.related}>
-        <h4></h4>
         <FeaturedCars
           cars={relatedCars}
           title="We have selected more Related"
           onViewAll={() => router.replace("/cars")}
+          loading={relatedLoading}
         />
         <div className={styles.ButtonsPreveNext}>
           <Button

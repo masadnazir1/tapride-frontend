@@ -4,7 +4,7 @@
     padding: 1rem;
     flex-direction: column;
     background: var(--card-bg);
-
+    color: #000;
 }
 
 .header {

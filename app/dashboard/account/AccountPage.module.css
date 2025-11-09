@@ -122,6 +122,8 @@
     margin-top: 0.75rem;
     font-size: clamp(1rem, 2.5vw, 1.5rem);
     font-weight: 600;
+    color: #000;
+
 }
 
 .email,
@@ -131,6 +133,8 @@
     font-size: clamp(0.8rem, 2vw, 1rem);
     color: var(--text-secondary);
     margin: 2px 0;
+
+
 }
 
 /* Menu */
@@ -141,6 +145,8 @@
     gap: 0.5rem;
     width: 100%;
     max-width: 360px;
+    color: #000;
+
     /* prevents huge stretching on very large screens */
 }
 
@@ -155,6 +161,8 @@
     cursor: pointer;
     transition: 0.2s;
     width: 100%;
+    color: #000;
+
 }
 
 .menuItem:hover {

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./FeaturedCars.module.css";
 import { useState } from "react";
 import Button from "../../ui/Button/Button";
@@ -63,13 +63,21 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
   gridCols = 3,
   showButton = true,
   outlineButton = false,
-  loading = false,
+  loading,
   showSave = true,
   onReSet,
 }) => {
   const router = useRouter();
   const { user } = useUser();
-  const [isloading, setisloading] = useState(loading);
+  const [isloading, setisloading] = useState(false);
+
+  useEffect(() => {
+    if (loading) {
+      setisloading(true);
+    } else {
+      setisloading(false);
+    }
+  });
 
   async function handleToggleSave(carId: number) {
     if (!user) {
@@ -150,7 +158,6 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
                   { name: car.fuel, icon: <FaGasPump /> },
                   { name: car.ac ? "AC" : "No AC", icon: <FaFan /> },
                   { name: `${car.seats} Seats`, icon: <FaChair /> },
-                  { name: `${car.doors} Doors`, icon: <FaDoorClosed /> },
                 ];
 
                 return (

@@ -3,7 +3,9 @@
 .container {
     background: var(--card-bg);
     min-height: 100vh;
-    padding: 20px 0px 100px 14px
+    padding: 20px 0px 100px 14px;
+    color: #000;
+
 }
 
 .header h1 {

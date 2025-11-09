@@ -24,6 +24,9 @@ import { useUser } from "@/app/context/UserContext";
 import axios from "axios";
 import AuthGuard from "@/app/utils/AuthGuard";
 import CarDetailsSkeleton from "@/app/components/Skeleton/CarDetailsSkeleton/CarDetailsSkeleton";
+import FeaturedCars, {
+  Car,
+} from "../../components/sections/FeaturedCars/FeaturedCars";
 
 interface ApiCar {
   id: number;
@@ -57,6 +60,11 @@ export default function BookingPage() {
   const [open, setOpen] = useState(false);
   const [showPickupPicker, setShowPickupPicker] = useState(false);
   const [showDropoffPicker, setShowDropoffPicker] = useState(false);
+  const [totalPage, setTotalPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [relatedCars, setRelatedCars] = useState<Car[]>([]);
+  const [relatedLoading, setRelatedLoading] = useState<boolean>(false);
+
   //
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -100,7 +108,10 @@ export default function BookingPage() {
       !user?.id ||
       !car
     ) {
-      toast.error("Please fill the form");
+      toast.error(
+        "Kindly fill in all the required booking details to proceed."
+      );
+
       return;
     }
 
@@ -151,6 +162,44 @@ export default function BookingPage() {
     }
   }
 
+  async function getRelatedCars(page: number) {
+    try {
+      setRelatedLoading(true);
+      const response: any = await api.get(
+        `/cars?status=available&category=Sedan&${page}=1&limit=3`
+      );
+
+      if (response?.success && response?.cars?.length) {
+        const pages = Math.ceil(response?.count / 4);
+        setTotalPage(pages > 0 ? pages : 1);
+        const mappedCars: Car[] = response.cars.map((c: any) => ({
+          id: c.id,
+          dealer_id: c.dealer_id,
+          make: c.name,
+          type: c.fuel,
+          daily_rate: Number(c.daily_rate),
+          images: c.images || [],
+          features: [
+            { name: c.transmission, icon: <FaCogs /> },
+            { name: c.fuel, icon: <FaGasPump /> },
+            { name: c.ac ? "AC" : "No AC", icon: <FaSnowflake /> },
+          ],
+        }));
+        setRelatedCars(mappedCars);
+        setRelatedLoading(false);
+      }
+    } catch (err) {
+      setRelatedLoading(false);
+      console.error("Failed to fetch related cars:", err);
+    } finally {
+      setRelatedLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getRelatedCars(1);
+  }, [id]);
+
   if (!car)
     return (
       <div style={{ margin: "5rem 2rem" }}>
@@ -162,137 +211,179 @@ export default function BookingPage() {
     <>
       <AuthGuard>
         <div className={styles.Container}>
-          <section className={styles.leftSection}>
-            <img
-              src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${sliderMain}`}
-              alt={car.name}
-              width={1000}
-              height={400}
-              className={styles.mainImage}
-            />
-            <div className={styles.thumbnailLine}>
-              {imageSlider.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${img}`}
-                  alt="thumbnail"
-                  width={80}
-                  height={80}
-                  className={styles.thumbnail}
-                  onClick={() => setSliderMain(img)}
-                />
-              ))}
-            </div>
-            <div className={styles.carSpecs}>
-              <h2>{car.name}</h2>
-              <p>{car.description}</p>
-              <div className={styles.specGrid}>
-                <div className={styles.specBox}>
-                  <FaCogs /> {car.transmission}
-                </div>
-                <div className={styles.specBox}>
-                  <FaGasPump /> {car.fuel}
-                </div>
-                <div className={styles.specBox}>
-                  <BsFillPeopleFill /> {car.seats} seats
-                </div>
-                <div className={styles.specBox}>
-                  <FaDoorClosed /> {car.doors} doors
-                </div>
-                <div className={styles.specBox}>
-                  <FaSnowflake /> {car.ac ? "AC" : "No AC"}
-                </div>
-                <div className={styles.specBox}>
-                  <FaCarSide /> {car.year}
+          <section className={styles.maindetailsSection}>
+            <section className={styles.leftSection}>
+              <img
+                src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${sliderMain}`}
+                alt={car.name}
+                width={1000}
+                height={400}
+                className={styles.mainImage}
+              />
+              <div className={styles.thumbnailLine}>
+                {imageSlider.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={`${process.env.NEXT_PUBLIC_API_IMAGE_URL}${img}`}
+                    alt="thumbnail"
+                    width={80}
+                    height={80}
+                    className={styles.thumbnail}
+                    onClick={() => setSliderMain(img)}
+                  />
+                ))}
+              </div>
+              <div className={styles.carSpecs}>
+                <h2>{car.name}</h2>
+                <p>{car.description}</p>
+                <div className={styles.specGrid}>
+                  <div className={styles.specBox}>
+                    <FaCogs /> {car.transmission}
+                  </div>
+                  <div className={styles.specBox}>
+                    <FaGasPump /> {car.fuel}
+                  </div>
+                  <div className={styles.specBox}>
+                    <BsFillPeopleFill /> {car.seats} seats
+                  </div>
+                  <div className={styles.specBox}>
+                    <FaDoorClosed /> {car.doors} doors
+                  </div>
+                  <div className={styles.specBox}>
+                    <FaSnowflake /> {car.ac ? "AC" : "No AC"}
+                  </div>
+                  <div className={styles.specBox}>
+                    <FaCarSide /> {car.year}
+                  </div>
                 </div>
               </div>
-            </div>
+            </section>
+
+            <section className={styles.rightSection}>
+              <div className={styles.bookingCard}>
+                <h3>Book This Car</h3>
+
+                <div className={styles.formGroup}>
+                  <label>Pickup Location</label>
+                  <Input
+                    ref={inputRef}
+                    type="text"
+                    placeholder="City or Airport"
+                    value={pickup}
+                    onChange={(e) => setPickup(e.target.value)}
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Drop-off Location</label>
+                  <Input
+                    type="text"
+                    placeholder="City or Airport"
+                    value={dropoff}
+                    onChange={(e) => setDropoff(e.target.value)}
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Pickup Date</label>
+                  <Input
+                    type="text"
+                    placeholder="Select date"
+                    value={
+                      pickupDate
+                        ? new Date(pickupDate).toLocaleDateString()
+                        : ""
+                    }
+                    onFocus={() => setShowPickupPicker(true)}
+                    readOnly
+                  />
+                  <CustomDatePicker
+                    variant="modal"
+                    visible={showPickupPicker}
+                    selectedDate={pickupDate ? new Date(pickupDate) : undefined}
+                    onDateChange={(date) => {
+                      setPickupDate(date.toISOString());
+                      setShowPickupPicker(false);
+                    }}
+                    disablePastDates
+                    onClose={() => setShowPickupPicker(false)}
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Drop-off Date</label>
+                  <Input
+                    type="text"
+                    placeholder="Select date"
+                    value={
+                      dropoffDate
+                        ? new Date(dropoffDate).toLocaleDateString()
+                        : ""
+                    }
+                    onFocus={() => setShowDropoffPicker(true)}
+                    readOnly
+                  />
+                  <CustomDatePicker
+                    variant="modal"
+                    visible={showDropoffPicker}
+                    selectedDate={
+                      dropoffDate ? new Date(dropoffDate) : undefined
+                    }
+                    onDateChange={(date) => {
+                      setDropoffDate(date.toISOString());
+                      setShowDropoffPicker(false);
+                    }}
+                    disablePastDates
+                    disableBeforeDate={
+                      pickupDate ? new Date(pickupDate) : undefined
+                    }
+                    onClose={() => setShowDropoffPicker(false)}
+                  />
+                </div>
+
+                <Button onClick={createBooking} disabled={isBooking}>
+                  {isBooking ? (
+                    <Loader color="#ffffffff" />
+                  ) : (
+                    `Confirm Booking – PKR ${car.daily_rate}/day`
+                  )}
+                </Button>
+              </div>
+            </section>
           </section>
+          <section className={styles.related}>
+            <FeaturedCars
+              cars={relatedCars}
+              title="We have selected more Related"
+              onViewAll={() => router.replace("/cars")}
+              loading={relatedLoading}
+            />
+            <div className={styles.ButtonsPreveNext}>
+              <Button
+                disabled={currentPage === 1}
+                onClick={() => {
+                  const newPage = currentPage - 1;
+                  setCurrentPage(newPage);
+                  getRelatedCars(newPage);
+                }}
+                style={{ width: "20%" }}
+              >
+                Prev
+              </Button>
+              <span className={styles.pagenumber}>
+                Page {currentPage} of {totalPage}
+              </span>
 
-          <section className={styles.rightSection}>
-            <div className={styles.bookingCard}>
-              <h3>Book This Car</h3>
-
-              <div className={styles.formGroup}>
-                <label>Pickup Location</label>
-                <Input
-                  ref={inputRef}
-                  type="text"
-                  placeholder="City or Airport"
-                  value={pickup}
-                  onChange={(e) => setPickup(e.target.value)}
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>Drop-off Location</label>
-                <Input
-                  type="text"
-                  placeholder="City or Airport"
-                  value={dropoff}
-                  onChange={(e) => setDropoff(e.target.value)}
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>Pickup Date</label>
-                <Input
-                  type="text"
-                  placeholder="Select date"
-                  value={
-                    pickupDate ? new Date(pickupDate).toLocaleDateString() : ""
-                  }
-                  onFocus={() => setShowPickupPicker(true)}
-                  readOnly
-                />
-                <CustomDatePicker
-                  variant="modal"
-                  visible={showPickupPicker}
-                  selectedDate={pickupDate ? new Date(pickupDate) : undefined}
-                  onDateChange={(date) => {
-                    setPickupDate(date.toISOString());
-                    setShowPickupPicker(false);
-                  }}
-                  disablePastDates
-                  onClose={() => setShowPickupPicker(false)}
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>Drop-off Date</label>
-                <Input
-                  type="text"
-                  placeholder="Select date"
-                  value={
-                    dropoffDate
-                      ? new Date(dropoffDate).toLocaleDateString()
-                      : ""
-                  }
-                  onFocus={() => setShowDropoffPicker(true)}
-                  readOnly
-                />
-                <CustomDatePicker
-                  variant="modal"
-                  visible={showDropoffPicker}
-                  selectedDate={dropoffDate ? new Date(dropoffDate) : undefined}
-                  onDateChange={(date) => {
-                    setDropoffDate(date.toISOString());
-                    setShowDropoffPicker(false);
-                  }}
-                  disablePastDates
-                  disableBeforeDate={
-                    pickupDate ? new Date(pickupDate) : undefined
-                  }
-                  onClose={() => setShowDropoffPicker(false)}
-                />
-              </div>
-
-              <Button onClick={createBooking} disabled={isBooking}>
-                {isBooking ? (
-                  <Loader color="#ffffffff" />
-                ) : (
-                  `Confirm Booking – PKR ${car.daily_rate}/day`
-                )}
+              <Button
+                disabled={currentPage === totalPage}
+                onClick={() => {
+                  const newPage = currentPage + 1;
+                  setCurrentPage(newPage);
+                  getRelatedCars(newPage);
+                }}
+                style={{ width: "20%" }}
+              >
+                Next
               </Button>
             </div>
           </section>

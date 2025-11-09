@@ -33,7 +33,7 @@
 
 .input {
     width: 100%;
-    background: transparent;
+    background: var(--card-bg);
     color: var(--text-primary);
     font-size: 0.95rem;
     border: none;

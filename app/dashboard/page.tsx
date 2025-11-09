@@ -19,10 +19,12 @@ export default function dashboard() {
   const [searchTerm, setsearchTerm] = useState("");
   const [totalPage, setTotalPage] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [relatedLoading, setRelatedLoading] = useState<boolean>(false);
 
   async function getCars(page: number) {
     try {
       setLoading(true);
+      setRelatedLoading(true);
       const response: any = await api.get(
         `/cars?status=available&category=Sedan&page=${page}&limit=2`
       );
@@ -46,11 +48,14 @@ export default function dashboard() {
           location: c.location,
         }));
         setCars(mappedCars);
+        setRelatedLoading(false);
       }
     } catch (err) {
       console.error("Failed to fetch cars:", err);
+      setRelatedLoading(false);
     } finally {
       setLoading(false);
+      setRelatedLoading(false);
     }
   }
 
@@ -83,6 +88,7 @@ export default function dashboard() {
         <section className={styles.NearBySection}>
           <FeaturedCars
             cars={cars}
+            loading={relatedLoading}
             title="Nearby You!"
             onViewAll={() => {
               window.location.href = "/cars";

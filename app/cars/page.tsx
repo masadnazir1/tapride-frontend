@@ -35,6 +35,8 @@ export default function Cars() {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showFilters, setShowFilters] = useState<boolean>(false);
+  const [relatedLoading, setRelatedLoading] = useState<boolean>(false);
+
   const [filters, setFilters] = useState({
     fuelType: "petrol",
     priceMin: 2000,
@@ -75,6 +77,7 @@ export default function Cars() {
     try {
       var acBoolean = filters.acType === "yes" ? true : false;
 
+      setRelatedLoading(true);
       setLoading(true);
       const response: any = await api.get(
         `/cars?status=available&category=${
@@ -106,11 +109,14 @@ export default function Cars() {
           location: c.location,
         }));
         setCars(mappedCars);
+        setRelatedLoading(false);
       }
     } catch (err) {
       console.error("Failed to fetch cars:", err);
+      setRelatedLoading(false);
     } finally {
       setLoading(false);
+      setRelatedLoading(false);
     }
   }
 
@@ -173,7 +179,12 @@ export default function Cars() {
             </div>
           </section>
 
-          <FeaturedCars cars={cars} title="" onReSet={handleResteFilters} />
+          <FeaturedCars
+            loading={relatedLoading}
+            cars={cars}
+            title=""
+            onReSet={handleResteFilters}
+          />
 
           <div className={styles.ButtonsPreveNext}>
             <Button
