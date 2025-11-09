@@ -137,6 +137,10 @@
 
 /* === Responsiveness === */
 @media (max-width: 1024px) {
+    .left {
+        display: none;
+    }
+
     .container {
         flex-direction: column;
         text-align: center;

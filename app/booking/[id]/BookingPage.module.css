@@ -39,7 +39,7 @@
     height: 60px;
     cursor: pointer;
     border-radius: var(--radius);
-    object-fit: cover;
+    object-fit: contain;
     transition: transform var(--transition);
 }
 

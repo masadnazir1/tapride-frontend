@@ -18,16 +18,20 @@ export default function Cars() {
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setsearchTerm] = useState("");
+  const [totalPage, setTotalPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  async function getCars() {
+  async function getCars(page: number) {
     try {
       setLoading(true);
       const response: any = await api.get(
-        "/cars?status=available&category=Sedan&page=1&limit=10"
+        `/cars?status=available&category=Sedan&page=${page}&limit=4`
       );
       if (response?.success) {
         // Map API data to FeaturedCars structure
 
+        const pages = Math.ceil(response?.count / 4);
+        setTotalPage(pages > 0 ? pages : 1);
         const mappedCars: Car[] = response.cars.map((c: any) => ({
           id: c.id,
           dealer_id: c.dealer_id,
@@ -53,7 +57,7 @@ export default function Cars() {
   }
 
   useEffect(() => {
-    getCars();
+    getCars(1);
   }, []);
 
   return (
@@ -94,9 +98,32 @@ export default function Cars() {
           <FeaturedCars cars={cars} title="" />
 
           <div className={styles.ButtonsPreveNext}>
-            <Button style={{ width: "20%" }}>Prev</Button>
-            <span className={styles.pagenumber}>01/100</span>
-            <Button style={{ width: "20%" }}>Next</Button>
+            <Button
+              disabled={currentPage === 1}
+              onClick={() => {
+                const newPage = currentPage - 1;
+                setCurrentPage(newPage);
+                getCars(newPage);
+              }}
+              style={{ width: "20%" }}
+            >
+              Prev
+            </Button>
+            <span className={styles.pagenumber}>
+              Page {currentPage} of {totalPage}
+            </span>
+
+            <Button
+              disabled={currentPage === totalPage}
+              onClick={() => {
+                const newPage = currentPage + 1;
+                setCurrentPage(newPage);
+                getCars(newPage);
+              }}
+              style={{ width: "20%" }}
+            >
+              Next
+            </Button>
           </div>
         </section>
       </main>

@@ -51,6 +51,8 @@ export default function CarDetails() {
   const [loading, setLoading] = useState<boolean>(false);
   const [imageSlider, setImageSlider] = useState<string[]>([]);
   const [sliderMain, setSliderMain] = useState<string>("");
+  const [totalPage, setTotalPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const setSliderImage = (src: string) => setSliderMain(src);
 
@@ -72,13 +74,15 @@ export default function CarDetails() {
     }
   }
 
-  async function getRelatedCars() {
+  async function getRelatedCars(page: number) {
     try {
       const response: any = await api.get(
-        "/cars?status=available&category=Sedan&page=1&limit=10"
+        `/cars?status=available&category=Sedan&${page}=1&limit=3`
       );
 
       if (response?.success && response?.cars?.length) {
+        const pages = Math.ceil(response?.count / 4);
+        setTotalPage(pages > 0 ? pages : 1);
         const mappedCars: Car[] = response.cars.map((c: any) => ({
           id: c.id,
           dealer_id: c.dealer_id,
@@ -101,7 +105,7 @@ export default function CarDetails() {
 
   useEffect(() => {
     getCarById();
-    getRelatedCars();
+    getRelatedCars(1);
   }, [id]);
 
   useEffect(() => {
@@ -199,6 +203,34 @@ export default function CarDetails() {
           title="We have selected more Related"
           onViewAll={() => router.replace("/cars")}
         />
+        <div className={styles.ButtonsPreveNext}>
+          <Button
+            disabled={currentPage === 1}
+            onClick={() => {
+              const newPage = currentPage - 1;
+              setCurrentPage(newPage);
+              getRelatedCars(newPage);
+            }}
+            style={{ width: "20%" }}
+          >
+            Prev
+          </Button>
+          <span className={styles.pagenumber}>
+            Page {currentPage} of {totalPage}
+          </span>
+
+          <Button
+            disabled={currentPage === totalPage}
+            onClick={() => {
+              const newPage = currentPage + 1;
+              setCurrentPage(newPage);
+              getRelatedCars(newPage);
+            }}
+            style={{ width: "20%" }}
+          >
+            Next
+          </Button>
+        </div>
       </section>
     </div>
   );

@@ -1,76 +1,276 @@
+/* Root variables are assumed to be defined as in your last message */
+/* Re-listing for clarity during this revision */
+:root {
+    /* Core brand colors */
+    --primary: #10b981;
+    /* Fresh green (main brand) */
+    --primary-dark: #059669;
+    /* Darker green for hover/active */
+    --accent: #f59e0b;
+    /* Warm orange (CTA highlights, offers) */
+    --success: #10b981;
+    /* Aligns with primary */
+    --danger: #ef4444;
+    /* Red (alerts, error states) */
+    --warning: #facc15;
+    /* Yellow (warnings, highlights) */
+
+    /* Backgrounds */
+    --bg: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%);
+    --card-bg: #ffffff;
+    --muted-bg: #f9fafb;
+
+    /* Text */
+    --text-primary: #111827;
+    /* Strong black */
+    --text-secondary: #5e5f62;
+    /* Dark gray */
+    --muted: #6b7280;
+    /* Muted gray */
+    --text-on-dark: #ffffff;
+    /* Text on dark backgrounds */
+
+    /* Borders & Shadows */
+    --borderColor: #d1d5db;
+    --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+    /* UI Elements */
+    --buttons: var(--primary);
+    --buttonHover: var(--primary-dark);
+    --radius: 5px;
+    --transition: all 0.25s ease;
+    --input-padding: 10px;
+
+    /* Spacing variables */
+    --spacing-xxs: 0.25rem;
+    /* 4px */
+    --spacing-xs: 0.5rem;
+    /* 8px */
+    --spacing-sm: 1rem;
+    /* 16px */
+    --spacing-md: 1.5rem;
+    /* 24px */
+    --spacing-lg: 2rem;
+    /* 32px */
+    --spacing-xl: 3rem;
+    /* 48px */
+}
+
+/* Modal Backdrop (reused from CustomDatePicker for consistency) */
 .modalBackdrop {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.6);
+    /* Darker backdrop for focus */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2000;
+    animation: fadeIn 0.3s ease-out forwards;
+    /* Reuse animation */
 }
 
+/* Modal Content for Time Picker */
 .modalContent {
     background: var(--card-bg);
-    padding: 20px 25px;
+    padding: var(--spacing-lg);
+    /* More generous padding */
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    max-width: 320px;
+    max-width: 350px;
+    /* Slightly wider for better feel */
     width: 90%;
     text-align: center;
-    font-family: sans-serif;
+    font-family:
+        "Inter",
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif;
+    /* Modern sans-serif */
+    color: var(--text-primary);
+    /* Default text color */
+    transform: translateY(-20px) scale(0.95);
+    /* Initial state for animation */
+    opacity: 0;
+    animation: slideUpFadeIn 0.3s ease-out forwards 0.1s;
+    /* Animate after backdrop */
 }
 
+/* Title of the Time Picker */
 .title {
-    margin-bottom: 14px;
-    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    /* More space below title */
+    font-weight: 700;
+    /* Bolder title */
+    font-size: 1.2rem;
+    /* Larger title */
     color: var(--text-primary);
 }
 
+/* Time Selector Container (Hours, Minutes, AM/PM) */
 .timeSelector {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 6px;
-    margin: 10px 0 20px;
+    gap: var(--spacing-xs);
+    /* Consistent gap between elements */
+    margin: var(--spacing-xs) 0 var(--spacing-lg);
+    /* More vertical margin */
 }
 
+/* Select dropdowns for hours/minutes/AMPM */
 .timeSelector select {
-    background: var(--input-bg);
-    border: 1px solid var(--border);
+    background: var(--card-bg);
+    /* Use card-bg for select background */
+    border: 1px solid var(--borderColor);
+    /* Use your borderColor */
     border-radius: var(--radius);
-    padding: 6px 10px;
-    font-size: 0.95rem;
+    padding: var(--input-padding);
+    /* Use your input padding */
+    font-size: 1rem;
+    /* Standard font size */
     cursor: pointer;
     transition: var(--transition);
+    height: 48px;
+    /* Consistent height with other inputs */
+    appearance: none;
+    /* Remove default browser select styles */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236B7280'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    /* Custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.25rem;
 }
 
 .timeSelector select:hover {
     border-color: var(--primary);
+    /* Primary border on hover */
 }
 
+.timeSelector select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+    /* Focus ring */
+}
+
+/* Colon separator */
 .timeSelector span {
     color: var(--text-secondary);
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+    /* Larger colon */
 }
 
+/* Action Buttons Container */
 .actions {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    /* Align buttons to the right */
+    gap: var(--spacing-sm);
+    /* Space between buttons */
+    margin-top: var(--spacing-md);
+    /* Space above buttons */
 }
 
+/* Close Button (or Confirm Button) */
 .closeBtn {
     background: var(--primary);
-    color: #fff;
+    color: var(--text-on-dark);
     border: none;
-    padding: 8px 16px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    /* More substantial padding */
     border-radius: var(--radius);
     cursor: pointer;
     transition: var(--transition);
+    font-size: 1rem;
+    /* Standard button font size */
+    font-weight: 600;
+    /* Bolder button text */
+    min-width: 100px;
+    /* Ensure a decent width */
 }
 
 .closeBtn:hover {
     background: var(--primary-dark);
+}
+
+/* Optional: Add a Cancel button */
+/* If you have another button, you can style it like this: */
+.cancelBtn {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--borderColor);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    font-weight: 500;
+    min-width: 100px;
+}
+
+.cancelBtn:hover {
+    background: var(--muted-bg);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Animations (reused from CustomDatePicker) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUpFadeIn {
+    from {
+        transform: translateY(-20px) scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 400px) {
+    .modalContent {
+        padding: var(--spacing-md);
+        /* Reduce padding on very small screens */
+        max-width: 95%;
+        /* Allow it to be slightly wider */
+    }
+
+    .timeSelector select {
+        font-size: 0.9rem;
+        /* Smaller font for tiny screens */
+        height: 44px;
+        /* Slightly smaller height */
+        padding: 0.7rem var(--spacing-sm);
+    }
+
+    .timeSelector span {
+        font-size: 1.1rem;
+        /* Adjust colon size */
+    }
+
+    .closeBtn,
+    .cancelBtn {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        min-width: 80px;
+        font-size: 0.9rem;
+    }
 }

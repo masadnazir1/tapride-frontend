@@ -34,6 +34,8 @@ function SearchPageContent() {
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(false);
   const [debounced, setDebounced] = useState(searchTerm);
+  const [totalPage, setTotalPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     const handler = setTimeout(() => setDebounced(searchTerm), 500);
@@ -44,32 +46,37 @@ function SearchPageContent() {
     inputRef.current?.focus();
   }, []);
 
+  const fetchCars = async (page: number) => {
+    try {
+      setLoading(true);
+
+      const res: any = await api.get(
+        `/user/cars/search?q=${encodeURIComponent(
+          debounced
+        )}&page=${page}&limit=${6}`
+      );
+
+      setCars(res.cars || []);
+      const pages = res?.pagination?.totalPages;
+      setTotalPage(pages > 0 ? pages : 1);
+    } catch {
+      setCars([]);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     if (!debounced.trim()) {
       setCars([]);
       return;
     }
 
-    const fetchCars = async () => {
-      try {
-        setLoading(true);
-        const res: any = await api.get(
-          `/user/cars/search?q=${encodeURIComponent(debounced)}`
-        );
-        setCars(res.cars || []);
-      } catch {
-        setCars([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCars();
+    fetchCars(1);
   }, [debounced]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(`/search?q=${encodeURIComponent(searchTerm)}`);
+    fetchCars(1);
   };
 
   return (
@@ -184,6 +191,35 @@ function SearchPageContent() {
               </div>
             </div>
           )}
+
+          <div className={styles.ButtonsPreveNext}>
+            <Button
+              disabled={currentPage === 1}
+              onClick={() => {
+                const newPage = currentPage - 1;
+                setCurrentPage(newPage);
+                fetchCars(newPage);
+              }}
+              style={{ width: "20%" }}
+            >
+              Prev
+            </Button>
+            <span className={styles.pagenumber}>
+              Page {currentPage} of {totalPage}
+            </span>
+
+            <Button
+              disabled={currentPage === totalPage}
+              onClick={() => {
+                const newPage = currentPage + 1;
+                setCurrentPage(newPage);
+                fetchCars(newPage);
+              }}
+              style={{ width: "20%" }}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </>

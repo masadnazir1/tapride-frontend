@@ -84,3 +84,11 @@
     font-size: 1.1rem;
     color: #777;
 }
+
+
+.ButtonsPreveNext {
+    display: flex;
+    margin: 20px 0;
+    align-items: center;
+    justify-content: space-between;
+}

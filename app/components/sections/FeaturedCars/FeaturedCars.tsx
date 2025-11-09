@@ -50,6 +50,7 @@ interface FeaturedCarsProps {
   showButton?: boolean;
   outlineButton?: boolean;
   showSave?: boolean;
+  loading?: boolean;
 }
 
 const FeaturedCars: React.FC<FeaturedCarsProps> = ({
@@ -61,6 +62,7 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
   gridCols = 3,
   showButton = true,
   outlineButton = false,
+  loading = false,
   showSave = true,
 }) => {
   const router = useRouter();
@@ -177,8 +179,8 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
                       <hr className={styles.divider} />
 
                       <div className={styles.features}>
-                        {features.map((f) => (
-                          <div key={f.name} className={styles.feature}>
+                        {features.map((f, idx) => (
+                          <div key={idx} className={styles.feature}>
                             {f.icon}
                             <span>{f.name}</span>
                           </div>

@@ -1,75 +1,290 @@
+/* Root variables are assumed to be defined as in your last message */
+/* Re-listing for clarity during this revision */
+:root {
+    /* Core brand colors */
+    --primary: #10b981;
+    /* Fresh green (main brand) */
+    --primary-dark: #059669;
+    /* Darker green for hover/active */
+    --accent: #f59e0b;
+    /* Warm orange (CTA highlights, offers) */
+    --success: #10b981;
+    /* Aligns with primary */
+    --danger: #ef4444;
+    /* Red (alerts, error states) */
+    --warning: #facc15;
+    /* Yellow (warnings, highlights) */
+
+    /* Backgrounds */
+    --bg: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%);
+    --card-bg: #ffffff;
+    --muted-bg: #f9fafb;
+
+    /* Text */
+    --text-primary: #111827;
+    /* Strong black */
+    --text-secondary: #5e5f62;
+    /* Dark gray */
+    --muted: #6b7280;
+    /* Muted gray */
+    --text-on-dark: #ffffff;
+    /* Added for text on the hero background */
+
+    /* Borders & Shadows */
+    --borderColor: #d1d5db;
+    --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+    /* UI Elements */
+    --buttons: var(--primary);
+    --buttonHover: var(--primary-dark);
+    --radius: 5px;
+    --transition: all 0.25s ease;
+    --input-padding: 10px;
+
+    /* Spacing variables */
+    --spacing-xxs: 0.25rem;
+    /* 4px */
+    --spacing-xs: 0.5rem;
+    /* 8px */
+    --spacing-sm: 1rem;
+    /* 16px */
+    --spacing-md: 1.5rem;
+    /* 24px */
+    --spacing-lg: 2rem;
+    /* 32px */
+    --spacing-xl: 3rem;
+    /* 48px */
+}
+
+/* Base DatePicker Container */
 .datePicker {
     width: 100%;
     max-width: 350px;
+    /* Slightly wider for better day visibility */
     background: var(--card-bg);
     border-radius: var(--radius);
-    padding: 10px;
+    padding: var(--spacing-sm);
+    /* More generous padding */
     box-shadow: var(--shadow);
-    font-family: sans-serif;
+    font-family:
+        "Inter",
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif;
+    /* Modern sans-serif */
     user-select: none;
+    color: var(--text-primary);
+    /* Ensure all text within is readable */
+    position: relative;
+    /* For absolute positioning of sub-elements if needed */
 }
 
+/* Header for Month/Year Navigation */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    font-weight: bold;
+    margin-bottom: var(--spacing-sm);
+    /* More space below header */
+    font-weight: 600;
+    /* Slightly bolder for prominence */
+    font-size: 1.1rem;
+    /* Larger month/year text */
+}
+
+.header span {
+    /* Month & Year display */
+    flex-grow: 1;
+    text-align: center;
     color: var(--text-primary);
+    /* Optional: Add a subtle hover for selecting year/month view */
+    /* cursor: pointer; */
+    /* border-radius: var(--radius); */
+    /* padding: var(--spacing-xxs) var(--spacing-xs); */
+    /* &:hover { background: var(--muted-bg); } */
 }
 
 .header button {
-    background: var(--buttons);
-    border: none;
-    color: #fff;
-    padding: 5px 10px;
+    background: transparent;
+    /* Transparent background by default */
+    border: 1px solid var(--borderColor);
+    /* Subtle border */
+    color: var(--text-primary);
+    /* Use text-primary for icons/arrows */
+    padding: var(--spacing-xs) var(--spacing-sm);
+    /* Increased padding */
     border-radius: var(--radius);
     cursor: pointer;
     transition: var(--transition);
+    display: flex;
+    /* For potential icon alignment */
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    /* Smaller button text/icon size */
+    width: 35px;
+    /* Fixed width for consistent arrow buttons */
+    height: 35px;
+    /* Fixed height */
+    margin: 0 var(--spacing-xxs);
+    /* Space between buttons and month text */
 }
 
 .header button:hover {
-    background: var(--buttonHover);
+    background: var(--muted-bg);
+    /* Muted background on hover */
+    border-color: var(--primary);
+    /* Primary border on hover */
+    color: var(--primary);
+    /* Primary text on hover */
 }
 
-.daysRow,
-.row {
-    display: flex;
+/* Day Names (Sun, Mon, Tue...) */
+.daysRow {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    /* Consistent 7-column grid */
+    margin-bottom: var(--spacing-xs);
+    /* Space below day names */
 }
 
-.dayName,
-.cell {
-    flex: 1;
+.dayName {
     text-align: center;
-    padding: 8px 0;
+    padding: var(--spacing-xs) 0;
+    font-size: 0.85rem;
+    /* Smaller, subtle day names */
+    color: var(--muted);
+    /* Muted color */
+    font-weight: 500;
+    /* Slightly bold */
+}
+
+/* Calendar Grid */
+.row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    /* Consistent 7-column grid */
 }
 
 .cell {
+    position: relative;
+    /* For potential dots/indicators */
+    text-align: center;
+    padding: var(--spacing-xs) 0;
+    /* Consistent vertical padding */
+    height: 38px;
+    /* Fixed height for consistent day squares */
+    display: flex;
+    /* For centering content */
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     border-radius: var(--radius);
     transition: var(--transition);
+    font-size: 1rem;
+    /* Standard day number size */
+    color: var(--text-primary);
+    /* Default day color */
 }
 
-.cell:hover {
-    background: var(--primary-dark);
-    color: white;
+.cell:hover:not(.selected):not(.disabled):not(.outsideMonth) {
+    background: var(--muted-bg);
+    /* Muted hover background */
+    color: var(--primary-dark);
+    /* Darker primary text on hover */
 }
 
+/* Selected Day */
 .selected {
     background: var(--primary);
-    color: #fff;
+    /* Primary background for selected */
+    color: var(--text-on-dark);
+    /* White text on primary */
+    font-weight: 600;
+    /* Bolder for selected day */
 }
 
+.selected:hover {
+    background: var(--primary-dark);
+    /* Darker primary on hover for selected */
+    color: var(--text-on-dark);
+}
+
+/* Disabled Days (Past dates, unavailable) */
 .disabled {
     color: var(--muted);
+    /* Muted gray for disabled */
+    cursor: not-allowed;
+    /* Indicate not clickable */
+    opacity: 0.6;
+    /* Slightly faded */
+}
+
+.disabled:hover {
+    background: none;
+    /* No background change on hover for disabled */
+    color: var(--muted);
+    /* Keep muted color */
+}
+
+/* Days outside the current month (if rendered) */
+.outsideMonth {
+    color: var(--muted);
+    opacity: 0.4;
+    /* Very faded */
     pointer-events: none;
+    /* Make them unclickable */
 }
 
+/* Compact variant (if you need a smaller picker) */
+.compact .datePicker {
+    max-width: 280px;
+    padding: var(--spacing-xs);
+}
+
+.compact .header {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.compact .header button {
+    width: 30px;
+    height: 30px;
+    padding: var(--spacing-xxs);
+}
+
+.compact .dayName,
 .compact .cell {
-    padding: 4px 0;
+    padding: 6px 0;
+    height: 30px;
+    font-size: 0.9rem;
 }
 
-.full {
+/* Full variant (if you want a larger picker) */
+.full .datePicker {
+    max-width: 400px;
+    padding: var(--spacing-md);
+}
+
+.full .header {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.full .header button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.full .dayName {
+    font-size: 0.9rem;
+}
+
+.full .cell {
+    padding: var(--spacing-xs) 0;
+    height: 45px;
     font-size: 1.1rem;
 }
 
@@ -80,18 +295,68 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6);
+    /* Darker backdrop */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    /* Simple fade-in animation for backdrop */
+    animation: fadeIn 0.3s ease-out forwards;
 }
 
 .modalContent {
     background: var(--card-bg);
-    padding: 20px;
+    padding: var(--spacing-lg);
+    /* More generous padding */
     border-radius: var(--radius);
-    max-width: 400px;
+    max-width: 420px;
+    /* Slightly wider for the modal */
     width: 90%;
+    /* Responsive width */
     box-shadow: var(--shadow);
+    /* Centering for smaller screens */
+    margin: var(--spacing-sm);
+    /* Ensure some margin on very small screens */
+    transform: translateY(-20px) scale(0.95);
+    /* Initial state for animation */
+    opacity: 0;
+    animation: slideUpFadeIn 0.3s ease-out forwards 0.1s;
+    /* Animate after backdrop */
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUpFadeIn {
+    from {
+        transform: translateY(-20px) scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 400px) {
+    .modalContent {
+        padding: var(--spacing-md);
+        /* Reduce padding on very small screens */
+    }
+
+    .datePicker {
+        max-width: 100%;
+        /* Allow picker to take full width of modal content */
+    }
 }
