@@ -8,6 +8,7 @@ import Button from "../../components/ui/Button/Button";
 import Loader from "@/app/components/ui/Loader/Loader";
 import Modal from "@/app/components/ui/Modal/Modal";
 import Input from "@/app/components/ui/Input/Input";
+import CustomDatePicker from "@/app/components/ui/CustomDate/CustomDatePicker";
 import api from "../../utils/api";
 import {
   FaGasPump,
@@ -55,6 +56,9 @@ export default function BookingPage() {
   const [isBooking, setisBooking] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const [showPickupPicker, setShowPickupPicker] = useState(false);
+  const [showDropoffPicker, setShowDropoffPicker] = useState(false);
+
   async function fetchCar() {
     try {
       const response: any = await api.get(`/cars/${id}`);
@@ -92,7 +96,6 @@ export default function BookingPage() {
       !car
     ) {
       toast.error("Please fill the form");
-
       return;
     }
 
@@ -126,22 +129,16 @@ export default function BookingPage() {
       }
     } catch (err: any) {
       setisBooking(false);
-
-      // Handle Axios errors specifically
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 409) {
-          // Conflict: already booked
           toast.error("You already have a pending or confirmed booking.");
           router.replace("/dashboard/bookings");
         } else if (err.response) {
-          // Other server-side errors
           toast.error(`Booking failed: ${err.response.statusText}`);
         } else {
-          // No response (network error)
           toast.error("Network error. Please try again.");
         }
       } else {
-        // Other unexpected errors
         toast.error("Something went wrong. Please try again.");
       }
     } finally {
@@ -210,6 +207,7 @@ export default function BookingPage() {
           <section className={styles.rightSection}>
             <div className={styles.bookingCard}>
               <h3>Book This Car</h3>
+
               <div className={styles.formGroup}>
                 <label>Pickup Location</label>
                 <Input
@@ -219,6 +217,7 @@ export default function BookingPage() {
                   onChange={(e) => setPickup(e.target.value)}
                 />
               </div>
+
               <div className={styles.formGroup}>
                 <label>Drop-off Location</label>
                 <Input
@@ -228,22 +227,60 @@ export default function BookingPage() {
                   onChange={(e) => setDropoff(e.target.value)}
                 />
               </div>
+
               <div className={styles.formGroup}>
-                <label>Pickup Date & Time</label>
+                <label>Pickup Date</label>
                 <Input
-                  type="datetime-local"
-                  value={pickupDate}
-                  onChange={(e) => setPickupDate(e.target.value)}
+                  type="text"
+                  placeholder="Select date"
+                  value={
+                    pickupDate ? new Date(pickupDate).toLocaleDateString() : ""
+                  }
+                  onFocus={() => setShowPickupPicker(true)}
+                  readOnly
+                />
+                <CustomDatePicker
+                  variant="modal"
+                  visible={showPickupPicker}
+                  selectedDate={pickupDate ? new Date(pickupDate) : undefined}
+                  onDateChange={(date) => {
+                    setPickupDate(date.toISOString());
+                    setShowPickupPicker(false);
+                  }}
+                  disablePastDates
+                  onClose={() => setShowPickupPicker(false)}
                 />
               </div>
+
               <div className={styles.formGroup}>
-                <label>Drop-off Date & Time</label>
+                <label>Drop-off Date</label>
                 <Input
-                  type="datetime-local"
-                  value={dropoffDate}
-                  onChange={(e) => setDropoffDate(e.target.value)}
+                  type="text"
+                  placeholder="Select date"
+                  value={
+                    dropoffDate
+                      ? new Date(dropoffDate).toLocaleDateString()
+                      : ""
+                  }
+                  onFocus={() => setShowDropoffPicker(true)}
+                  readOnly
+                />
+                <CustomDatePicker
+                  variant="modal"
+                  visible={showDropoffPicker}
+                  selectedDate={dropoffDate ? new Date(dropoffDate) : undefined}
+                  onDateChange={(date) => {
+                    setDropoffDate(date.toISOString());
+                    setShowDropoffPicker(false);
+                  }}
+                  disablePastDates
+                  disableBeforeDate={
+                    pickupDate ? new Date(pickupDate) : undefined
+                  }
+                  onClose={() => setShowDropoffPicker(false)}
                 />
               </div>
+
               <Button onClick={createBooking} disabled={isBooking}>
                 {isBooking ? (
                   <Loader color="#ffffffff" />

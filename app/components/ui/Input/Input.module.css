@@ -45,7 +45,7 @@
     color: var(--muted);
 }
 
-/* Hide default browser icons for specific input types */
+/* Hide default browser icons for specific input types
 .input::-webkit-calendar-picker-indicator,
 .input::-webkit-clear-button,
 .input::-webkit-inner-spin-button,
@@ -65,7 +65,7 @@
     -webkit-appearance: none;
     -moz-appearance: textfield;
     appearance: none;
-}
+} */
 
 
 
