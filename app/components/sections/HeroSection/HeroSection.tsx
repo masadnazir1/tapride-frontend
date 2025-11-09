@@ -1,4 +1,3 @@
-// components/sections/HeroSection/HeroSection.tsx (No major changes needed here, just verify components props)
 "use client";
 
 import { useEffect, useState } from "react";
@@ -11,11 +10,7 @@ import CustomTimePicker from "../../ui/CustomTimePicker/CustomTimePicker";
 
 export default function HeroSection() {
   const router = useRouter();
-  const images = [
-    "/images/hero1.jpg",
-    "/images/hero2.jpg",
-    "/images/hero3.jpeg",
-  ];
+  const images = ["/images/hero1.jpg", "/images/hero2.jpg", "/images/bg.jpg"];
 
   const [activeIndex, setActiveIndex] = useState(0);
 

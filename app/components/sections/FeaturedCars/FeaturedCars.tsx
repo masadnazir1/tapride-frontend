@@ -51,6 +51,7 @@ interface FeaturedCarsProps {
   outlineButton?: boolean;
   showSave?: boolean;
   loading?: boolean;
+  onReSet?: () => void;
 }
 
 const FeaturedCars: React.FC<FeaturedCarsProps> = ({
@@ -64,10 +65,11 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
   outlineButton = false,
   loading = false,
   showSave = true,
+  onReSet,
 }) => {
   const router = useRouter();
   const { user } = useUser();
-  const [isloading, setisloading] = useState(false);
+  const [isloading, setisloading] = useState(loading);
 
   async function handleToggleSave(carId: number) {
     if (!user) {
@@ -136,11 +138,12 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
               : styles.threeCols
           }`}
         >
-          {cars.length === 0
+          {isloading
             ? [...Array(gridCols * 2)].map((_, idx) => (
                 <CarCardSkeleton key={idx} />
               ))
-            : cars.map((car) => {
+            : cars.length > 0 &&
+              cars.map((car) => {
                 // Build features dynamically
                 const features: CarFeature[] = [
                   { name: car.transmission, icon: <FaCogs /> },
@@ -219,6 +222,24 @@ const FeaturedCars: React.FC<FeaturedCarsProps> = ({
                   </div>
                 );
               })}
+
+          {cars && cars.length < 1 && (
+            <>
+              <div className={styles.NoCarMessageContainer}>
+                <h2 className={styles.NoCarTitle}>
+                  No cars match your current filters
+                </h2>
+                <p className={styles.NoCarText}>
+                  We couldn’t find any available cars based on your selected
+                  options. Try adjusting your filters — such as fuel type, price
+                  range, or vehicle category — to see more results.
+                </p>
+                <Button onClick={onReSet} style={{ maxWidth: "150px" }}>
+                  Reset Filters
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>

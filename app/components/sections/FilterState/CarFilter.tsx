@@ -1,31 +1,55 @@
 "use client";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
+import { useImperativeHandle } from "react";
 import styles from "./CarFilter.module.css";
+import Button from "../../ui/Button/Button";
 
 interface FilterState {
   fuelType: string;
   priceMin: number;
   priceMax: number;
-  seats: string;
+  location: string;
   vehicleType: string;
   bodyType: string;
   acType: string;
 }
 
-export default function CarFilter({
-  onFilterChange,
-}: {
-  onFilterChange?: (filters: FilterState) => void;
-}) {
+export interface CarFilterRef {
+  resetFilter: () => void;
+}
+
+const CarFilter = forwardRef<
+  CarFilterRef,
+  { onFilterChange?: (filters: FilterState) => void }
+>(({ onFilterChange }, ref) => {
   const [filters, setFilters] = useState<FilterState>({
-    fuelType: "",
-    priceMin: 0,
-    priceMax: 50000,
-    seats: "",
-    vehicleType: "",
-    bodyType: "",
-    acType: "",
+    fuelType: "petrol",
+    priceMin: 2000,
+    priceMax: 10000,
+    location: "rawalpindi",
+    vehicleType: "car",
+    bodyType: "sedan",
+    acType: "yes",
   });
+
+  const resetValues: FilterState = {
+    fuelType: "petrol",
+    priceMin: 2000,
+    priceMax: 10000,
+    location: "rawalpindi",
+    vehicleType: "car",
+    bodyType: "sedan",
+    acType: "yes",
+  };
+
+  const resetFilter = () => {
+    setFilters(resetValues);
+    onFilterChange?.(resetValues);
+  };
+
+  useImperativeHandle(ref, () => ({
+    resetFilter,
+  }));
 
   const handleChange = (key: keyof FilterState, value: string | number) => {
     const updated = { ...filters, [key]: value };
@@ -82,16 +106,16 @@ export default function CarFilter({
       </div>
 
       <div className={styles.filterGroup}>
-        <label>Seats</label>
+        <label>Select Location</label>
         <select
-          value={filters.seats}
-          onChange={(e) => handleChange("seats", e.target.value)}
+          value={filters.location}
+          onChange={(e) => handleChange("location", e.target.value)}
         >
-          <option value="">All</option>
-          <option value="2">2 Seater</option>
-          <option value="4">4 Seater</option>
-          <option value="5">5 Seater</option>
-          <option value="7">7+ Seater</option>
+          <option value="Rawalpind">Rawalpind</option>
+          <option value="Islamabad">Islamabad</option>
+          <option value="Rawalpindi">Rawalpindi</option>
+          {/* <option value="5">5 Seater</option>
+          <option value="7">7+ Seater</option> */}
         </select>
       </div>
 
@@ -129,11 +153,17 @@ export default function CarFilter({
           value={filters.acType}
           onChange={(e) => handleChange("acType", e.target.value)}
         >
-          <option value="">All</option>
+          <option value="yes">All</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
       </div>
+      <div className={styles.filterGroup}>
+        <Button onClick={resetFilter}>Reset Filters</Button>
+      </div>
     </aside>
   );
-}
+});
+
+CarFilter.displayName = "CarFilter";
+export default CarFilter;

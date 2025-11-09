@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -55,9 +55,14 @@ export default function BookingPage() {
   const [dropoffDate, setDropoffDate] = useState("");
   const [isBooking, setisBooking] = useState(false);
   const [open, setOpen] = useState(false);
-
   const [showPickupPicker, setShowPickupPicker] = useState(false);
   const [showDropoffPicker, setShowDropoffPicker] = useState(false);
+  //
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus(); // focus on mount
+  }, []);
 
   async function fetchCar() {
     try {
@@ -211,6 +216,7 @@ export default function BookingPage() {
               <div className={styles.formGroup}>
                 <label>Pickup Location</label>
                 <Input
+                  ref={inputRef}
                   type="text"
                   placeholder="City or Airport"
                   value={pickup}

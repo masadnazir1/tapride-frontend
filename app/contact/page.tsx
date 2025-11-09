@@ -60,7 +60,6 @@ export default function ContactPage() {
       setloading(false);
     } catch (err: any) {
       if (axios.isAxiosError(err)) {
-        console.log(err);
         if (err.status === 400) {
           toast.error(err?.response?.data?.message);
           setloading(false);

@@ -1,32 +1,67 @@
+/* Main container */
 .container {
     display: flex;
     gap: 24px;
-    margin: 4rem 0;
+    margin: 2rem 0;
     padding: 1rem 1.5rem;
-    flex-wrap: wrap;
-    /* Allows stacking on smaller screens */
 }
 
-/* Sidebar & main content ratio for large screens */
-.container> :first-child {
-    /* flex: 0 0 360px; */
-    /* CarFilter fixed width */
+/* Filter sidebar */
+.FilterSection {
+    width: 320px;
+    /* fixed sidebar width */
+    flex-shrink: 0;
+    /* prevent shrinking */
     position: sticky;
     top: 100px;
-    /* distance from top of viewport */
+    /* stays visible when scrolling */
     align-self: flex-start;
-    /* ensures sticky works */
+    font-size: large;
 }
 
-.container> :last-child {
-    flex: 1 1 auto;
-    /* FeaturedCars fills remaining space */
-}
-
+/* Cars content area */
 .carscontainer {
-    padding-bottom: 10px;
+    flex: 1;
+    /* take remaining space */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
+/* Find section (search & filter button) */
+.FindSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.searchbox {
+    flex: 1;
+    position: relative;
+}
+
+.buttonStyles {
+    width: 100px;
+}
+
+/* Mobile filter toggle button */
+.MobileFilterWrapper {
+    display: none;
+    /* hidden on desktop */
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    max-width: 100px;
+    padding: 18px;
+}
+
+.filterIcon {
+    width: 30px;
+    height: 30px;
+}
+
+/* Pagination buttons */
 .ButtonsPreveNext {
     display: flex;
     margin: 20px 0;
@@ -34,24 +69,8 @@
     justify-content: space-between;
 }
 
-
-.FindSection {
-    gap: 10px !important;
-    display: flex;
-    align-items: center;
-
-}
-
-.searchbox {
-    width: 90%;
-}
-
-.buttonStyles {
-    width: 25%;
-}
-
-.NearBySection {
-    margin: 30px 0;
+.pagenumber {
+    font-weight: 500;
 }
 
 /* Mobile / small screens */
@@ -61,15 +80,22 @@
         gap: 16px;
     }
 
-    .container> :first-child,
-    .container> :last-child {
-        flex: 1 1 100%;
-        position: static;
-        /* disable sticky on small screens */
+    .FilterSection {
+        width: 100%;
+        position: relative;
+        top: auto;
+    }
+
+    .MobileFilterWrapper {
+        display: block;
+    }
+
+    .carscontainer {
+        width: 100%;
     }
 }
 
-/* Extra small / narrow screens (down to 200px) */
+/* Extra small screens (down to 200px) */
 @media (max-width: 400px) {
     .container {
         margin: 3rem 0;
