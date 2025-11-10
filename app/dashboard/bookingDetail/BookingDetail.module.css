@@ -1,0 +1,192 @@
+.container {
+
+    gap: 2rem;
+    padding: 2rem;
+    margin: auto;
+    color: #1e1e1e;
+    font-family: system-ui, sans-serif;
+    flex-wrap: wrap;
+}
+
+.innerconatiner {
+    display: flex;
+    gap: 2rem;
+    margin: auto;
+    color: #1e1e1e;
+    font-family: system-ui, sans-serif;
+    flex-wrap: wrap;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.left {
+    flex: 1 1 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.right {
+    flex: 1 1 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.section {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px #0000000d;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.label {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.value {
+    font-weight: 600;
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.confirmed {
+    background: #10b981;
+}
+
+.paid {
+    background: #3b82f6;
+}
+
+.amount {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+.period p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.3rem 0;
+}
+
+.duration {
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
+.dealerName {
+    font-weight: 700;
+}
+
+.note {
+    color: #444;
+    margin: .4rem 0;
+    font-size: .9rem;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.carCard {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.carImage {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+
+}
+
+.carDetails {
+    padding: 1rem;
+}
+
+.rate {
+    color: #2563eb;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.icons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Responsive: mobile stack */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 1rem;
+        margin-bottom: 80px;
+    }
+
+    .left,
+    .right {
+        width: 100%;
+    }
+
+    .carImage {
+        height: 180px;
+        object-fit: contain;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .section {
+        padding: 1rem;
+    }
+
+    .icons {
+        grid-template-columns: 1fr;
+    }
+}

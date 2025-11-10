@@ -157,7 +157,14 @@ export default function BookingsPage() {
               <div className={styles.actions}>
                 {isUpcoming ? (
                   <>
-                    <Button variant="outline">View Details</Button>
+                    <Button
+                      onClick={() =>
+                        router.push(`/dashboard/bookingDetail?id=${b.id}`)
+                      }
+                      variant="outline"
+                    >
+                      View Details
+                    </Button>
                     {b.status.toLowerCase() !== "cancelled" && (
                       <Button
                         onClick={() => {

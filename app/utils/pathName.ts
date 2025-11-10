@@ -6,4 +6,5 @@ export const pathNames: string[] = [
   "/dashboard/bookings",
   "/dashboard/saved",
   "/dashboard/account",
+  "/dashboard/bookingDetail",
 ];
