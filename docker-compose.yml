@@ -1,0 +1,11 @@
+services:
+  tapride-frontend:
+    container_name: tapride-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4001:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
