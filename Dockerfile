@@ -10,6 +10,6 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 3000   # internal container port
+EXPOSE 3000   
 CMD ["npm", "start"]
 #3
