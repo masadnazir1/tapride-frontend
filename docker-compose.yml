@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8070:3000" # maps host 8070 to container 3000
+      - "8070:8070"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
